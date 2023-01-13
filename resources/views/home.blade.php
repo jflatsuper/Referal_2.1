@@ -16,8 +16,10 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+                <div id='root'></div>
             </div>
         </div>
+        <script async src= "{{ asset('js/app.js') }} "></script>
     </div>
 </div>
 @endsection

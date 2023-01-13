@@ -72,10 +72,12 @@
                 </div>
             </div>
         </nav>
+        
 
         <main class="py-4">
             @yield('content')
         </main>
+        <script async src= "{{ asset('js/app.js') }} "></script>
     </div>
 </body>
 </html>

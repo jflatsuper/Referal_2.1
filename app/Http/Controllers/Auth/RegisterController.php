@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\VendorCode;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,11 +54,38 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'surname'=>['required','string','max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => ['required', 'string', 'min:5', 'unique:users'],
+            // 'vend_code' => ['required', 'string', 'unique:verification,verif_code'],
+            // 'ref_code' => ['string'],
+            'link' => ['string']
         ]);
     }
+    public function register(Request $data)
+    {
+        $value = $data['vend_code'];
+        $validatedData = $this->validator($data->all());
+        $validVerifCode = VendorCode::where('verif_code', 1)->where('status', false)->update(['status' => true]);
+        if ($validatedData->fails()) {
+            return redirect()->back()->withErrors($validatedData);
+            # code...
+        } else {
+            $this->create($data->all());
+            $auth = Auth::attempt(['username' => $data->username, 'password' => $data->password]);
+            if ($auth) {
+                return view('home');
 
+            } else {
+                return view('welcome');
+            }
+            # code...
+        }
+
+        // return response()->json(["val"=>$validatedData->errors()]);
+
+    }
     /**
      * Create a new user instance after a valid registration.
      *
@@ -64,10 +94,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['name'],
+            'surname'=>$data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'username'=>$data['username'],
+            
         ]);
     }
 }

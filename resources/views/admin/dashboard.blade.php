@@ -19,5 +19,7 @@
             </div>
         </div>
     </div>
-</div>
+    <div id="homepage"></div>
+</div>    
+
 @endsection

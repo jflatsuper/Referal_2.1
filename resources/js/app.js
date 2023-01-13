@@ -12,4 +12,7 @@ import './bootstrap';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import './components/Example';
+import './components/App';
+import './components/Admin/Home'
+import './components/Admin/TransactionScreen'
+import './components/Admin/VendCodeScreen'

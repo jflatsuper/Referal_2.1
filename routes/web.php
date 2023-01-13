@@ -14,14 +14,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/admin', function () {
-      return view('admin.dashboard');
-    })->name('dashboard');
-  });
+  Route::get('/admin', function () {
+    return view('admin.dashboard');
+  }
+  )->name('dashboard');
+  Route::get('/admin/vendor_management', function () {
+    return view('admin.vendor');
+  }
+  )->name('ad_vendor');
+  Route::get('/admin/transactions', function () {
+    return view('admin.transactions');
+  }
+  )->name('ad_transactions');
+  Route::get('/getAllUsers', [App\Http\Controllers\Users\UserController::class, 'getAllUsers']);
+});

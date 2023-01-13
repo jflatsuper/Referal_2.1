@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+
 
 class LoginController extends Controller
 {
@@ -28,6 +30,18 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    public function login(Request $request)
+    {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            // Authentication passed...
+            $direction = $this->redirectTo();
+            return redirect()->intended($direction);
+        } else {
+            return redirect()->back()->withErrors([
+                'username' => 'Snap! you are done!'
+            ]);
+        }
+    }
 
     /**
      * Create a new controller instance.
