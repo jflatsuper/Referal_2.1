@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Referee extends Model
 {
     use HasFactory;
-    protected $table = "transactions";
+    protected $table = "referals";
+
     protected $fillable = [
-        'transaction_id',
-        'user_id',
-        'amount',
-        'status',
-        'transaction_type'
-        
+        'referee',
+        'referal',
 
     ];
 

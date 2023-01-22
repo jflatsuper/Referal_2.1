@@ -11,6 +11,7 @@ class VendorCode extends Model
     protected $table = "verification";
     
     protected $fillable = [
+        'id',
         'vendor_id',
         'status',
         'user_id',

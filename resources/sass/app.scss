@@ -1,4 +1,5 @@
 // Fonts
+@use 'sass:math';
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
 // Variables
@@ -6,3 +7,16 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+@function pxToRem($pxValue) {
+   @return math.div($pxValue, 16) * 1rem;
+}
+.mainContainer{
+    width: 100%;
+
+    
+
+}
+body{
+    background-color: #82acd6;
+}

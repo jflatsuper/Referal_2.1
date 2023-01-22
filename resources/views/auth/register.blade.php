@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="surname" class="col-md-4 col-form-label text-md-end">{{ __('SurName') }}</label>
+                            <label for="surname" class="col-md-4 col-form-label text-md-end">{{ __('Surname') }}</label>
 
                             <div class="col-md-6">
                                 <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus>
@@ -90,7 +90,7 @@
                             <label for="ref_code" class="col-md-4 col-form-label text-md-end">{{ __('Referal Code') }}</label>
 
                             <div class="col-md-6">
-                                <input id="ref_code" type="text" class="form-control @error('ref_code') is-invalid @enderror" name="ref_code" required>
+                                <input id="ref_code" type="text" class="form-control @error('ref_code') is-invalid @enderror" value="{{ Request::get('referrer') }}" name="ref_code" readonly>
 
                                 @error('ref_code')
                                     <span class="invalid-feedback" role="alert">

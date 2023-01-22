@@ -5,17 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Account extends Model
 {
     use HasFactory;
-    protected $table = "transactions";
+    protected $table = "accounts";
+
     protected $fillable = [
-        'transaction_id',
+        'id',
         'user_id',
-        'amount',
-        'status',
-        'transaction_type'
-        
+        'money_balance',
+        'point_balance',
+        'account_num',
+        'bank',
+        'account_name'
+
 
     ];
 

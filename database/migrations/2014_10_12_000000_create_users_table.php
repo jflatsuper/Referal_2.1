@@ -22,8 +22,12 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('user_type')->default('guest');
             $table->string('password');
+            $table->string('phone')->nullable();
+            $table->string('country')->default('Nigeria');
+            $table->string('address')->nullable();
             $table->string('account_status')->default('active');
             $table->string('link')->nullable();
+            $table->string('ref_link');
             $table->rememberToken();
             $table->timestamps();
         });
