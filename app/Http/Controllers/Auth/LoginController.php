@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Storage;
 
 
 class LoginController extends Controller
@@ -34,6 +35,7 @@ class LoginController extends Controller
     {
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             // Authentication passed...
+            Storage::disk('local')->put('user',Auth::user());
             $direction = $this->redirectTo();
             return redirect()->intended($direction);
         } else {

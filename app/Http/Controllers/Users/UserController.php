@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,9 @@ class UserController extends Controller
         
         $users = User::whereNot('user_type', 'superAdmin')->get();
         return $users->makeHidden("password");
+    }
+    public function getCurrentUser(){
+        return response()->json(Auth::user());
     }
     public function getAllVendors(Request $request)
     {
