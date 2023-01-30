@@ -18,7 +18,7 @@ class UserController extends Controller
         return $users->makeHidden("password");
     }
     public function getCurrentUser(){
-        return response()->json(Auth::user());
+        return response()->json(Auth::user()->makeHidden('password'));
     }
     public function getAllVendors(Request $request)
     {

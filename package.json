@@ -18,6 +18,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "dayjs": "^1.11.7",
         "formik": "^2.2.9",
         "react-router": "^6.6.1",
         "react-router-dom": "^6.6.1",

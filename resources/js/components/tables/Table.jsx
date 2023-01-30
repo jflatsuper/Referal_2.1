@@ -2,7 +2,7 @@ import React from "react";
 const DefaultTable = ({ tableHeaders = [], tableBody = [] }) => {
     return (
         <table className="table">
-            <thead className="table-dark">
+            <thead className="table-light">
                 <tr>
                     {tableHeaders.map((item) => (
                         <th scope="col" key={item} id={item}>
@@ -11,7 +11,7 @@ const DefaultTable = ({ tableHeaders = [], tableBody = [] }) => {
                     ))}
                 </tr>
             </thead>
-            <tbody>
+            <tbody style={{color:'white'}}>
                 {tableBody?.map((item, id) => {
                     const values = Object.values(item);
                     console.log(item);

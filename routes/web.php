@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::middleware(["auth"])->group(function () {
   Route::get('/getAllUserTransactions', [App\Http\Controllers\Transactions\TransactionController::class, 'getAllUserTransactions']);
+  Route::get('/getCurrentUser', [App\Http\Controllers\Users\UserController::class, 'getCurrentUser']);
 });
 Route::middleware(['auth', 'isUser'])->group(function () {
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -28,7 +29,8 @@ Route::middleware(['auth', 'isUser'])->group(function () {
     function () {
       return view('users.transaction');
     }
-  );
+  )->name('transactions');
+  ;
   Route::get(
     '/account',
     function () {
