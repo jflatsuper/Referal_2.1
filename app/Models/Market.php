@@ -12,16 +12,13 @@ class Market extends Model
     protected $table = "marketplace";
 
     protected $fillable = [
-        'id',
         'user_id',
         'name',
         "description",
         "link",
         "transaction_id",
         "active",
-        'approved',
-        'created_at',
-        'updated_at'
+        'approved',    
 
 
     ];

@@ -87,8 +87,11 @@ body {
     cursor: pointer;
     background-color: transparent;
     color: white;
-    padding: 10px 60px;
+    padding: 10px 20px;
     border: none;
+    @media screen and (min-width: 781px) {
+        padding: 10px pxToRem(60);
+    }
 }
 
 .openbtn:hover {
@@ -104,8 +107,9 @@ body {
 }
 .largecard {
     height: 250px;
+   
     color: #000034;
-    background-color: white;
+    background-color: burlywood;
     transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter,
         filter;
     transition-duration: 1s;
@@ -145,12 +149,30 @@ body {
     flex-direction: column;
     gap: 20px;
 }
-.editbtn{
+.editbtn {
     width: max-content;
     float: right;
 }
-.rowItem{
+.rowItem {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+.marketCard {
+    height: 250px;
+}
+.contentArea {
+    padding: pxToRem(20);
+    padding-top: pxToRem(60);
+    @media screen and (min-width: 781px) {
+        padding: pxToRem(60);
+        padding-top: pxToRem(70);
+    }
+}
+.homepage {
+    width: 100%;
+    @media screen and (min-width: 781px) {
+        width: 50%;
+        background-color: pink;
+    }
 }

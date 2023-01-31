@@ -26,6 +26,7 @@ Route::middleware(["auth"])->group(function () {
     '/getUserAccount',
     [App\Http\Controllers\Account\AccountController::class, 'getUserWithAccountDetails']
   );
+  Route::post('/createAdvertisement', [App\Http\Controllers\Market\MarketController::class, 'createAdvertisement']);
 });
 Route::middleware(['auth', 'isUser'])->group(function () {
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

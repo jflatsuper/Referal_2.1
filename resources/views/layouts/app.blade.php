@@ -136,7 +136,7 @@ Profile</a>
       <div  class="togglediv"><button class="openbtn" onclick="openNav()">&#9776;</button></div>  @endauth
         <div style="height:60px;background-color:#003366">
         
-        <div style="padding:60px;"> @yield('content')</div>
+        <div class="contentArea"> @yield('content')</div>
           </div> 
       
              

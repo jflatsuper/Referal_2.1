@@ -55,7 +55,7 @@ const SettingsScreen = () => {
                         <div>Referal Code</div> <div>{user?.ref_link}</div>
                     </div>
                 </div>
-                
+
                 {/* <form>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
@@ -84,37 +84,37 @@ const SettingsScreen = () => {
             </div>
 
             <div className="pt-5">
-                    <button
-                        type="button"
-                        className="btn btn-md btn-warning editbtn"
-                    >
-                        Edit Account Details
-                    </button>
-                </div>
+                <button
+                    type="button"
+                    className="btn btn-md btn-warning editbtn"
+                >
+                    Edit Account Details
+                </button>
+            </div>
 
-                <div className=" py-3 px-3 bg-white rounded settingsCard">
-                    <div className="contactGap">
-                        <div>Name</div>{" "}
-                        <div>
-                            {user?.first_name} {user?.surname}
-                        </div>
-                    </div>
-                    <div className="contactGap">
-                        <div>Username</div> <div>{user?.username}</div>
-                    </div>
-                    <div className="contactGap">
-                        <div>Referee</div>{" "}
-                        <div>
-                            {user?.refName} {user?.refSurname}
-                        </div>
-                    </div>
-                    <div className="contactGap">
-                        <div>Email</div> <div>{user?.email}</div>
-                    </div>
-                    <div className="contactGap">
-                        <div>Referal Code</div> <div>{user?.ref_link}</div>
+            <div className=" py-3 px-3 bg-white rounded settingsCard">
+                <div className="contactGap">
+                    <div>Name</div>{" "}
+                    <div>
+                        {user?.first_name} {user?.surname}
                     </div>
                 </div>
+                <div className="contactGap">
+                    <div>Username</div> <div>{user?.username}</div>
+                </div>
+                <div className="contactGap">
+                    <div>Referee</div>{" "}
+                    <div>
+                        {user?.refName} {user?.refSurname}
+                    </div>
+                </div>
+                <div className="contactGap">
+                    <div>Email</div> <div>{user?.email}</div>
+                </div>
+                <div className="contactGap">
+                    <div>Referal Code</div> <div>{user?.ref_link}</div>
+                </div>
+            </div>
         </div>
     );
 };
