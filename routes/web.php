@@ -21,6 +21,11 @@ Auth::routes();
 Route::middleware(["auth"])->group(function () {
   Route::get('/getAllUserTransactions', [App\Http\Controllers\Transactions\TransactionController::class, 'getAllUserTransactions']);
   Route::get('/getCurrentUser', [App\Http\Controllers\Users\UserController::class, 'getCurrentUser']);
+  Route::get('/getAllAdvertisements', [App\Http\Controllers\Market\MarketController::class, 'getAllAdvertisements']);
+  Route::get(
+    '/getUserAccount',
+    [App\Http\Controllers\Account\AccountController::class, 'getUserWithAccountDetails']
+  );
 });
 Route::middleware(['auth', 'isUser'])->group(function () {
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -36,8 +41,18 @@ Route::middleware(['auth', 'isUser'])->group(function () {
     function () {
       return view('users.settings');
     }
-  );
+  )->name('settings');
+  Route::get(
+    '/market',
+    function () {
+      return view('users.market');
+    }
+  )->name('market');
+
+
 });
+
+
 Route::middleware(['auth', 'isAdmin'])->group(function () {
   Route::get(
     '/admin',

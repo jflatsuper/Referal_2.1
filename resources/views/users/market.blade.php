@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="">
-    <div id="user-settings"></div>
+    <div id="user-market"></div>
 </div>    
 
 @endsection

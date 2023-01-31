@@ -18,3 +18,4 @@ import "./components/Admin/TransactionScreen";
 import "./components/Admin/VendCodeScreen";
 import "./components/User/TransactionScreen";
 import "./components/User/SettingsScreen";
+import "./components/User/AdvertisementScreen";
