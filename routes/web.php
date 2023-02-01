@@ -21,12 +21,18 @@ Auth::routes();
 Route::middleware(["auth"])->group(function () {
   Route::get('/getAllUserTransactions', [App\Http\Controllers\Transactions\TransactionController::class, 'getAllUserTransactions']);
   Route::get('/getCurrentUser', [App\Http\Controllers\Users\UserController::class, 'getCurrentUser']);
+  Route::get('/getUserWithReferals', [App\Http\Controllers\Users\UserController::class, 'getUserWithReferals']);
+  
   Route::get('/getAllAdvertisements', [App\Http\Controllers\Market\MarketController::class, 'getAllAdvertisements']);
   Route::get(
     '/getUserAccount',
     [App\Http\Controllers\Account\AccountController::class, 'getUserWithAccountDetails']
   );
   Route::post('/createAdvertisement', [App\Http\Controllers\Market\MarketController::class, 'createAdvertisement']);
+  Route::post(
+    '/editAccount',
+    [App\Http\Controllers\Account\AccountController::class, 'editAccount']
+  );
 });
 Route::middleware(['auth', 'isUser'])->group(function () {
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

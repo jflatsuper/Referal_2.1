@@ -2,13 +2,16 @@ import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import DefaultCard from "./cards/Card";
+import largeIcon from '../../../public/icons/EAZYEARN LOGO 64PX BLUE.svg'
 
 function App() {
     const [user, setUser] = useState();
+    const [referal,setReferal]=useState();
     useLayoutEffect(() => {
-        axios.get("/getCurrentUser").then((data) => {
+        axios.get("/getUserWithReferals").then((data) => {
             console.log(data);
-            setUser(data.data);
+            setUser(data.data[0]);
+            setReferal(data.data)
         });
         return;
     }, []);
@@ -27,18 +30,47 @@ function App() {
                 <div style={{ width: "50%" }}>
                     <div className="row justify-content-flex-start pb-5 ">
                         <div className="col-md-5 ">
-                            <DefaultCard props={{ ref_link: user?.ref_link }} />
+                            <div className="card rounded shadow-sm largecard">
+                                
+                                
+                                <div className="card-body">
+                                <div>
+                                    <img src={largeIcon}/>
+                                </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-md-5 offset-md-1">
-                            <DefaultCard />
+                            <div className="card rounded shadow-sm largecard">
+                                <div>
+                                    <img src="https://img.icons8.com/material-rounded/16/null/naira.png" />
+                                    5000
+                                </div>
+                                <div className="card-body">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="row justify-content-flex-start pb-5 ">
                         <div className="col-md-5 ">
-                            <DefaultCard />
+                            <div className="card rounded shadow-sm largecard">
+                                <div>
+                                    <img src="https://img.icons8.com/material-rounded/16/null/naira.png" />
+                                    5000
+                                </div>
+                                <div className="card-body">
+                                </div>
+                            </div>
                         </div>
                         <div className="col-md-5 offset-md-1">
-                            <DefaultCard />
+                            <div className="card rounded shadow-sm largecard">
+                                <div>
+                                    <img src="https://img.icons8.com/material-rounded/16/null/naira.png" />
+                                    5000
+                                </div>
+                                <div className="card-body">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
