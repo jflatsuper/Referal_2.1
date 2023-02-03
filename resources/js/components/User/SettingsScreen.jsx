@@ -73,26 +73,21 @@ const SettingsScreen = () => {
             {toggle1 ? (
                 <div className=" py-3 px-3 bg-white rounded settingsCard">
                     <div className="contactGap">
-                        <div>Name</div>{" "}
+                        <div>Bank</div>{" "}
                         <div>
-                            {user?.first_name} {user?.surname}
+                            {user?.bank??'Unavailable'}
                         </div>
                     </div>
                     <div className="contactGap">
-                        <div>Username</div> <div>{user?.username}</div>
+                        <div>Account Number</div> <div>{user?.account_num??'Unavailable'}</div>
                     </div>
                     <div className="contactGap">
-                        <div>Referee</div>{" "}
+                        <div>Account Name</div>{" "}
                         <div>
-                            {user?.refName} {user?.refSurname}
+                            {user?.account_name??'N/A'}
                         </div>
                     </div>
-                    <div className="contactGap">
-                        <div>Email</div> <div>{user?.email}</div>
-                    </div>
-                    <div className="contactGap">
-                        <div>Referal Code</div> <div>{user?.ref_link}</div>
-                    </div>
+                    
                 </div>
             ) : (
                 <AccountEditForm {...user}  />

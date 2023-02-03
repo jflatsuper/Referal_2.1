@@ -1,47 +1,99 @@
 import React from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-const UserEditForm = ({email,first_name,surname,username}) => {
+const UserEditForm = ({ email, first_name, surname, username,phone }) => {
     const formikProps = useFormik({
         initialValues: {
-            account
+            first_name: first_name,
+            surname: surname,
+            username: username,
+            phone:phone
         },
-        onSubmit: () => {},
+        onSubmit: (values) => {
+            axios.post('/editUser',{
+               ... values
+            })
+        },
         enableReinitialize: true,
     });
-    console.log(email)
     return (
         <form>
-            <div class="row g-2">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="floatingInputGrid"
-                            placeholder="name@example.com"
-                            value={email}
-                        />
-                        <label for="floatingInputGrid">Email address</label>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "32px",
+                    padding: "64px",
+                    borderRadius: "16px",
+                    backgroundColor: "lightgray",
+                    color:'black'
+                }}
+                className="shadow-sm "
+            >
+                <div>
+                    <h5 style={{ color: "black" }}>User Information</h5>
+                </div>
+                <div className="row g-5">
+                    <div className="col">
+                        <div class="form-floating mb-3">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                value={formikProps.values.first_name}
+                                onChange={formikProps.handleChange('first_name')}
+                            />
+                            <label for="floatingInput">First Name</label>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div class="form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="floatingPassword"
+                                value={formikProps.values.surname}
+                                onChange={formikProps.handleChange('surname')}
+                            />
+                            <label for="floatingPassword">Surname</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <select
-                            class="form-select"
-                            id="floatingSelectGrid"
-                            aria-label="Floating label select example"
-                        >
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <label for="floatingSelectGrid">
-                            Works with selects
-                        </label>
+                <div className="row g-5">
+                    <div className="col-lg-7 col-md-7 col-sm-12">
+                        <div class="form-floating mb-3">
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="floatingInput"
+                                value={email}
+                                disabled
+                            />
+                            <label for="floatingInput">Email address</label>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div class="form-floating">
+                            <input
+                                type="tel"
+                                class="form-control"
+                                id="floatingPassword"
+                                value={formikProps.values.phone}
+                                onChange={formikProps.handleChange('phone')}
+                            />
+                            <label for="floatingPassword">Phone Number</label>
+                        </div>
                     </div>
                 </div>
+                <div>
+                <button
+                    type="button"
+                    className="btn btn-md btn-warning editbtn"
+                    onClick={formikProps.handleSubmit}
+                >
+                    Save
+                </button>
+            </div>
             </div>
         </form>
     );

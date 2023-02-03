@@ -22,7 +22,7 @@ Route::middleware(["auth"])->group(function () {
   Route::get('/getAllUserTransactions', [App\Http\Controllers\Transactions\TransactionController::class, 'getAllUserTransactions']);
   Route::get('/getCurrentUser', [App\Http\Controllers\Users\UserController::class, 'getCurrentUser']);
   Route::get('/getUserWithReferals', [App\Http\Controllers\Users\UserController::class, 'getUserWithReferals']);
-  
+
   Route::get('/getAllAdvertisements', [App\Http\Controllers\Market\MarketController::class, 'getAllAdvertisements']);
   Route::get(
     '/getUserAccount',
@@ -33,9 +33,15 @@ Route::middleware(["auth"])->group(function () {
     '/editAccount',
     [App\Http\Controllers\Account\AccountController::class, 'editAccount']
   );
+
+  Route::post('/editUser', [App\Http\Controllers\Users\UserController::class, 'editUser']);
 });
 Route::middleware(['auth', 'isUser'])->group(function () {
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+  Route::get('/withdrawals', function () {
+    return view('users.withdrawal');
+  }
+  )->name('withdrawals');
   Route::get(
     '/transactions',
     function () {

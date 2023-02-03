@@ -55,7 +55,7 @@ class UserController extends Controller
         return Validator::make($data, [
             'first_name' => ['string', 'max:255'],
             'surname' => ['string', 'max:255'],
-            'email' => ['string'],
+            'phone' => ['string'],
 
         ]);
     }
@@ -74,7 +74,7 @@ class UserController extends Controller
         return User::where('id', Auth::id())->update([
             'first_name' => $data['first_name'],
             'surname' => $data['surname'],
-            'email' => $data['email']
+            'phone' => $data['phone']
         ]);
     }
 

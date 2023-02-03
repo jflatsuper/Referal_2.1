@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Market;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Transactions\TransactionController;
 use App\Models\Market;
+use App\Models\User;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -16,7 +19,7 @@ class MarketController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'transaction_id' => ['required', 'string'],
+            'transaction_id' => ['required'],
             'link' => ['string']
         ]);
     }
@@ -33,8 +36,26 @@ class MarketController extends Controller
             return redirect()->back()->withErrors($validatedData);
             #return to register page if validation fails
         } else {
-            $value = $this->create($data);
-            return response()->json($value);
+            $eazyearn = User::where('username', 'eazyearn')->first()->id;
+            $success = DB::transaction(function () use ($data, $eazyearn) {
+
+                TransactionController::createTransaction([
+                    'transaction_id' => $data['transaction_id'],
+                    'user_id' => $eazyearn,
+                    'amount' => 2000,
+                    'status' => config('enums.transaction_status')['SUC'],
+                    'transaction_type' => config('enums.transaction_types')['AD']
+                ]);
+                $value = $this->create($data);
+                return $value;
+            });
+            return response()->json($success);
+            // return response()->json([
+            //     'error' => 'Failed to create advertisment'
+            // ]);
+
+
+
 
         }
     }
