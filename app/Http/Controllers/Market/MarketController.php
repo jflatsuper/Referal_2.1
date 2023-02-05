@@ -38,11 +38,18 @@ class MarketController extends Controller
         } else {
             $eazyearn = User::where('username', 'eazyearn')->first()->id;
             $success = DB::transaction(function () use ($data, $eazyearn) {
-
-                TransactionController::createTransaction([
+                $trans = new TransactionController();
+                $trans->createTransaction([
                     'transaction_id' => $data['transaction_id'],
                     'user_id' => $eazyearn,
                     'amount' => 2000,
+                    'status' => config('enums.transaction_status')['SUC'],
+                    'transaction_type' => config('enums.transaction_types')['AD']
+                ]);
+                $trans->createTransaction([
+                    'transaction_id' => $data['transaction_id'],
+                    'user_id' => Auth::id(),
+                    'amount' => -2000,
                     'status' => config('enums.transaction_status')['SUC'],
                     'transaction_type' => config('enums.transaction_types')['AD']
                 ]);

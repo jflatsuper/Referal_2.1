@@ -26,9 +26,11 @@ const AdvertisementScreen = () => {
                     <h3>Mark</h3>
                     <img src={link} /> <h3>t</h3>
                 </div>
-                <a
-                    className="rowItem"
+               
+                <button
+                    className="rowItem btn btn-link"
                     data-bs-toggle="modal"
+                    type="button"
                     data-bs-target="#exampleModal"
                     style={{
                         cursor: "pointer",
@@ -38,7 +40,7 @@ const AdvertisementScreen = () => {
                 >
                     <Plus />
                     <div>Add Advertisement</div>
-                </a>
+                </button>
             </div>
             {/* <div className="rowItem" style={{ color: "orange", gap: "10px" }}>
         <img src={link} /> <h3>Market</h3>

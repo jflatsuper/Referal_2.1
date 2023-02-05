@@ -38,10 +38,17 @@ Route::middleware(["auth"])->group(function () {
 });
 Route::middleware(['auth', 'isUser'])->group(function () {
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-  Route::get('/withdrawals', function () {
-    return view('users.withdrawal');
-  }
+  Route::get(
+    '/withdrawals',
+    function () {
+      return view('users.withdrawal');
+    }
+
+
   )->name('withdrawals');
+  Route::get('/getWithdrawalDetails', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'getWithdrawalDetails'])->name('getWithdrawalDetails');
+  Route::post('/createWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'createWithdrawal'])->name('createWithdrawal');
+  
   Route::get(
     '/transactions',
     function () {

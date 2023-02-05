@@ -12,7 +12,7 @@ class Withdrawal extends Model
     protected $table = "withdrawals";
 
     protected $fillable = [
-
+        'id',
         'transaction_id',
         'reference_id',
         'user_id',
