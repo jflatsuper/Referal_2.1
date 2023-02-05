@@ -33,9 +33,9 @@ class UserController extends Controller
         $user_referees = DB::table('users')
             ->where('users.id', Auth::id())
             ->join('accounts', 'users.id', '=', 'accounts.user_id')
-            ->join('referals', 'users.id', '=', 'referals.referee')
+            ->leftJoin('referals', 'users.id', '=', 'referals.referee')
             ->limit(10)
-            ->join('users AS referred', 'referals.referal', '=', 'referred.id')
+            ->leftJoin('users AS referred', 'referals.referal', '=', 'referred.id')
             ->select(
                 'referals.referee as MAINID',
                 'users.*',
