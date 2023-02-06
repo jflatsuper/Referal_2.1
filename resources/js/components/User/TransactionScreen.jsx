@@ -12,16 +12,18 @@ const TransactionScreen = () => {
     }, []);
     return (
         <div>
-            <div className="pb-5">
+            <div className="pb-5" style={{color:'orange'}}>
                 <h3>Transactions Report</h3>
             </div>
-
             <div
-                style={{ backgroundColor: " #000034", color: "white" }}
-                className="card rounded py-5 px-0"
+                style={{ backgroundColor: " #000034",width:"100%",color: "white" }}
+                className="card rounded pb-5 px-0"
             >
-                <div></div>
-
+            <div
+                style={{ backgroundColor: " #000034",width:"100%",overflow:"scroll", color: "white" }}
+                className="card rounded pt-5 px-0"
+            >
+                
                 <div
                     style={{
                         display: "flex",
@@ -59,7 +61,11 @@ const TransactionScreen = () => {
                             }
                         )}
                     />
-                    <nav aria-label="Page navigation example">
+                   
+                </div>
+                
+            </div>
+            <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <li class="page-item disabled">
                                 <a class="page-link">Previous</a>
@@ -86,8 +92,7 @@ const TransactionScreen = () => {
                             </li>
                         </ul>
                     </nav>
-                </div>
-            </div>
+                    </div>
         </div>
     );
 };

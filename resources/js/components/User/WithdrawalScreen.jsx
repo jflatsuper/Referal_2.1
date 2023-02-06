@@ -63,12 +63,11 @@ const WithdrawalScreen = () => {
             </button> */}
             <div
                 className="rowItem"
-                style={{ color: "orange", justifyContent: "space-between" }}
+                style={{ color: "orange", justifyContent: "space-between",alignItems:'center' }}
             >
-                <div className="rowItem">
-                    {" "}
-                    <h3>Withdrawals</h3>
-                </div>
+                
+                    <h3 className="mb-0">Withdrawals</h3>
+           
 
                 <button
                     className="rowItem btn btn-link"
@@ -82,7 +81,7 @@ const WithdrawalScreen = () => {
                     }}
                 >
                     <Plus />
-                    <div>New Withdrawal Request</div>
+                    <div>Withdrawal Request</div>
                 </button>
             </div>
             <div

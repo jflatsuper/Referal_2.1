@@ -8,10 +8,11 @@ import HourGlass from "../../icons/HourGlass";
 dayjs.extend(relativeTime);
 const WithdrawalItem = ({ item }) => {
     return (
-        <div className="card bg-light rowItem">
-             <div style={{backgroundColor:"lightgray",borderTopLeftRadius:"5px",borderBottomLeftRadius:"5px"}} className="px-3 py-3"><img src={wallet} /></div>
+        <div className="card bg-light  rowItem">
+            
+             <div style={{backgroundColor:"lightgray",borderTopLeftRadius:"5px",borderBottomLeftRadius:"5px",height:"100%"}} className="px-3 py-3"><img src={wallet} /></div>
             <div
-                className="card-body rowItem"
+                className="card-body py-0 rowItem"
                 style={{ justifyContent: "space-between", flexWrap: "wrap" }}
             >
                

@@ -3,9 +3,14 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import DefaultCard from "./cards/Card";
 import largeIcon from "../../../public/icons/EAZYEARN LOGO 64PX BLUE.svg";
+import smallIcon from "../../../public/icons/EAZYEARN LOGO 16PX BLUE.svg";
 import copy from "../../../public/icons/copy.svg";
 import { ref } from "yup";
 import dayjs from "dayjs";
+import Withdraw from "./icons/Withdraw";
+import Profile from "./icons/Profile";
+import Transaction from "./icons/Transaction";
+import Market from "./icons/Market";
 function App() {
     const [user, setUser] = useState();
     const [referal, setReferal] = useState([]);
@@ -29,7 +34,168 @@ function App() {
                 </h3>
             </div>
             <div className="mainCont">
-                <div className='homeScreen'>
+                <div className="homeScreen d-block d-lg-none">
+                    <div className="card rounded shadow-sm largecardMobile mb-5">
+                        <div
+                            className="card-body"
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <div>
+                                <div className="rowItem row">
+                                    {/* <img src={largeIcon} /> */}
+                                    <h6>TOTAL BALANCE</h6>
+                                </div>
+                                <div
+                                    className="rowItem"
+                                    style={{
+                                        alignItems: "center",
+                                        // justifyContent: "center",
+                                    }}
+                                >
+                                    {/* <img src="https://img.icons8.com/material-rounded/48/null/naira.png" />{" "} */}
+                                    <div
+                                        style={{
+                                            fontSize: "24px",
+                                            fontWeight: 500,
+                                            width: "100%",
+                                        }}
+                                    >
+                                        {Intl.NumberFormat("en-US", {
+                                            style: "currency",
+                                            currency: "NGN",
+                                            minimumFractionDigits: 0,
+                                        }).format(user?.money_balance)}{" "}
+                                        <hr />
+                                        {/* {user?.money_balance} */}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="row p-2"
+                                style={{ justifyContent: "space-between" }}
+                            >
+                                <div className="quickLink">
+                                  <a href="/withdrawals"><Withdraw /></a>  
+                                </div>
+                                <div className="quickLink">
+                                    <a href="/account"><Profile /></a>
+                                </div>
+                                <div className="quickLink">
+                                   <a href="/transactions"><Transaction /></a> 
+                                </div>
+                                <div className="quickLink">
+                                   <a href="/market"><Market /></a> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="">
+                        <div className="row gx-3 gy-3 mb-5">
+                        <div className="col-6 ">
+                                <div className="eazyCol p-3">
+                                    <h6>Current Balance</h6>
+                                    <div
+                                        className="rowItem"
+                                        style={{
+                                            alignItems: "center",
+                                            // justifyContent: "center",
+                                        }}
+                                    >
+                                      
+                                        <div
+                                            style={{
+                                                fontSize: "16px",
+                                                fontWeight: 500,
+                                                color:'burlywood'
+                                            }}
+                                        >
+                                          {Intl.NumberFormat("en-US", {
+                                                style: "currency",
+                                                currency: "NGN",
+                                                minimumFractionDigits: 0,
+                                            }).format(user?.money_balance)}{" "}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-6 ">
+                                <div className="eazyCol p-3">
+                                    <h6>Eazy Points</h6>
+                                    <div
+                                        className="rowItem"
+                                        style={{
+                                            alignItems: "center",
+                                            gap:'3px'
+                                            // justifyContent: "center",
+                                        }}
+                                    >
+                                        <img src={smallIcon} />{" "}
+                                        <div
+                                            style={{
+                                                fontSize: "16px",
+                                                fontWeight: 500,
+                                                color:'burlywood'
+                                            }}
+                                        >
+                                            {user?.point_balance}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-6 ">
+                                <div className="eazyCol p-3">
+                                    <h6>Referal Number</h6>
+                                    <div
+                                        className="rowItem"
+                                        style={{
+                                            alignItems: "center",
+                                            // justifyContent: "center",
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                fontSize: "16px",
+                                                fontWeight: 500,
+                                                color:'burlywood'
+                                            }}
+                                        >
+                                            {referal?.length}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-6 ">
+                                <div className="eazyCol p-3">
+                                    <h6 className="capitalize">{String(user?.user_type)}{" "}
+                                            {"account"}</h6>
+                                    <div
+                                        className="rowItem"
+                                        style={{
+                                            alignItems: "center",
+                                            // justifyContent: "center",
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                fontSize: "16px",
+                                                fontWeight: 500,
+                                                color:'burlywood'
+                                            }}
+                                        >
+                                            {user?.username}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div className="homeScreen d-none d-lg-block">
                     <div className="row justify-content-flex-start  ">
                         <div className="col-md-5 mb-5">
                             <div className="card rounded shadow-sm largecard">
@@ -185,16 +351,23 @@ function App() {
                     style={{ display: "flex" }}
                     className="card rounded shadow-sm homelargecard homeScreen"
                 >
-                    <div className="card-body" style={{display:'flex',flexDirection:'column',justifyContent:"space-between"}}>
-                        <div style={{maxHeight:"85%"}}>
+                    <div
+                        className="card-body"
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <div style={{ maxHeight: "85%" }}>
                             <h3>Referrals</h3>
                             <div
                                 style={{
                                     display: "flex",
                                     flexDirection: "column",
                                     width: "100%",
-                                    height:"100%",
-                                    overflow:"scroll"
+                                    height: "100%",
+                                    overflow: "scroll",
                                 }}
                                 className="py-4"
                             >
@@ -208,13 +381,19 @@ function App() {
                                                 backgroundColor: "#003366",
                                             }}
                                         >
-                                            <div style={{ fontWeight: 500 }} className='maxWidth singleLine'>
+                                            <div
+                                                style={{ fontWeight: 500 }}
+                                                className="maxWidth singleLine"
+                                            >
                                                 {" "}
                                                 {item?.refFirstName}
                                                 {item?.refSurname}
                                             </div>
-                                            <div className='maxWidth singleLine'> {item?.refUsername}</div>
-                                            <div className='maxWidth singleLine'>
+                                            <div className="maxWidth singleLine">
+                                                {" "}
+                                                {item?.refUsername}
+                                            </div>
+                                            <div className="maxWidth singleLine">
                                                 {dayjs(
                                                     item?.refcreated
                                                 ).fromNow()}

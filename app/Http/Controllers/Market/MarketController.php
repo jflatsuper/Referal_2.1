@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Market;
 
+use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Transactions\TransactionController;
 use App\Models\Market;
@@ -39,6 +40,7 @@ class MarketController extends Controller
             $eazyearn = User::where('username', 'eazyearn')->first()->id;
             $success = DB::transaction(function () use ($data, $eazyearn) {
                 $trans = new TransactionController();
+                $account = new AccountController();
                 $trans->createTransaction([
                     'transaction_id' => $data['transaction_id'],
                     'user_id' => $eazyearn,
@@ -46,6 +48,7 @@ class MarketController extends Controller
                     'status' => config('enums.transaction_status')['SUC'],
                     'transaction_type' => config('enums.transaction_types')['AD']
                 ]);
+                $account->where("user_id", $eazyearn)->increment('money_balance', 2000);
                 $trans->createTransaction([
                     'transaction_id' => $data['transaction_id'],
                     'user_id' => Auth::id(),
@@ -57,11 +60,6 @@ class MarketController extends Controller
                 return $value;
             });
             return response()->json($success);
-            // return response()->json([
-            //     'error' => 'Failed to create advertisment'
-            // ]);
-
-
 
 
         }

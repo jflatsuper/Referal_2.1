@@ -15,6 +15,7 @@
     width: 100%;
 }
 body {
+    
     background-color: #003366;
     color: white;
 }
@@ -108,6 +109,46 @@ body {
 .maxWidth {
     width: 33.33%;
 }
+.largecardMobile {
+    height: 250px;
+
+    color: #000034;
+    background-color: white;
+    border: 1px solid lightgray;
+    transition: all 1s;
+
+    transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter,
+        filter;
+    transition-duration: 1s;
+    //    z-index: 1;
+    filter: drop-shadow(
+        0px 0.15px 0.45px rgba(0, 0, 0, 0.03),
+        0px 0.8px 1.8px rgba(0, 0, 0, 0.05)
+    );
+    border-radius: pxToRem(16);
+    &:hover {
+        border-radius: pxToRem(16);
+        filter: drop-shadow(0px 5px 16px rgba(0, 0, 0, 0.1));
+        background-color: #000034;
+        transition: all 1s;
+        background-color: #000034;
+        border: none;
+
+        color: white;
+
+        box-shadow: 0;
+        .quickLink {
+            background-color: orange;
+            color: #000034;
+            a{
+                color: #000034;
+            }
+            
+
+        }
+    }
+    cursor: pointer;
+}
 .largecard {
     height: 250px;
 
@@ -136,6 +177,12 @@ body {
         color: burlywood;
 
         box-shadow: 0;
+        .quickLink {
+            background-color: burlywood;
+            color: #000034;
+            border: 1px solid burlywood;
+
+        }
     }
     cursor: pointer;
 }
@@ -291,14 +338,41 @@ body {
 .homeScreen {
     width: 50%;
     @media only screen and (max-width: 768px) {
-        width: 100% ;
+        width: 100%;
     }
 }
-.mainCont{
+.mainCont {
     display: flex;
     flex-direction: row;
     @media only screen and (max-width: 768px) {
         flex-direction: column;
     }
+}
+.quickLink {
+    width: pxToRem(50);
+    height: pxToRem(50);
+    border-radius: pxToRem(8);
+    background-color: #000034;
+    color: orange;
+    border-radius: pxToRem(8);
+    filter: drop-shadow(0px 5px 16px rgba(0, 0, 0, 0.1)) !important;
+    transition: all 1s;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000034;
+    
+
+    box-shadow: 0;
+}
+.quickLink a{
+    color:orange;
+}
+.eazyCol{
+    border: 1px solid #000034;
+    border-radius: pxToRem(12);height: pxToRem(80);
+    background-color: white;
+    color: #000034;
 
 }

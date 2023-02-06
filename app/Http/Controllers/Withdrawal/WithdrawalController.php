@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Withdrawal;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Transactions\TransactionController;
+use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Withdrawal;
 use Auth;
 use DB;
@@ -35,8 +38,30 @@ class WithdrawalController extends Controller
     }
     public function createWithdrawal(Request $request)
     {
-        $value = $this->create($request->all());
-        return response()->json($value);
+        $eazyearn = User::where('username', 'eazyearn')->first()->id;
+        DB::transaction(function () use ($request, $eazyearn) {
+            $value = $this->create($request->all());
+            $trans_id = uuid_create();
+            $trans = new TransactionController();
+
+            $trans->createTransaction([
+                'transaction_id' => $trans_id,
+                'user_id' => $eazyearn,
+                'amount' => -$request['amount'],
+                'status' => config('enums.transaction_status')['PEND'],
+                'transaction_type' => config('enums.transaction_types')['PAY']
+            ]);
+            $trans->createTransaction([
+                'transaction_id' => $trans_id,
+                'user_id' => Auth::id(),
+                'amount' => -$request['amount'],
+                'status' => config('enums.transaction_status')['PEND'],
+                'transaction_type' => config('enums.transaction_types')['WIT']
+            ]);
+            return response()->json($value);
+        });
+        response()->json(["error" => "There was an error"]);
+
     }
     public function getWithdrawalDetails()
     {
@@ -44,7 +69,7 @@ class WithdrawalController extends Controller
             ->where('users.id', Auth::id())
             ->join('accounts', 'users.id', '=', 'accounts.user_id')
             ->leftJoin('withdrawals', 'users.id', '=', 'withdrawals.user_id')
-            ->select('users.*', 'accounts.*','withdrawals.*')
+            ->select('users.*', 'accounts.*', 'withdrawals.*')
             ->get();
         return $value;
 
@@ -52,7 +77,7 @@ class WithdrawalController extends Controller
     protected function create(array $data)
     {
         return Withdrawal::create([
-            'id'=>uuid_create(),
+            'id' => uuid_create(),
             'transaction_id' => $data['trans_id'] ?? uuid_create(),
             'user_id' => Auth::id(),
             'amount' => $data['amount'],
