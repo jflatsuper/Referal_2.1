@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { FileUploader } from "react-drag-drop-files";
+
+const fileTypes = ["JPG", "PNG", "GIF"];
+
 const AdvertisementForm = () => {
+    const [file, setFile] = useState(null);
+    const handleChange = (file) => {
+        console.log(file)
+        setFile(file);
+    };
     const config = {
         public_key: "FLWPUBK_TEST-c6065db888e7db229f9657428483b4bc-X",
         tx_ref: Date.now(),
-        amount: 2000,
+        amount: 10000,
         currency: "NGN",
         payment_options: "card,mobilemoney,ussd",
         customer: {
@@ -21,14 +30,19 @@ const AdvertisementForm = () => {
         },
     };
     const handleFlutterPayment = useFlutterwave(config);
-    const createAdvertisement = (values) => {
-        axios
-            .post("/createAdvertisement", {
-                ...values,
-            })
+    const createAdvertisement = async (values) => {
+        const fd = new FormData();
+        fd.append("name", values.name);
+        fd.append("description", values?.description);
+        fd.append("link", values?.link);
+        fd.append("file", file);
+        fd.append("transaction_id", values?.transaction_id);
+
+        await axios
+            .post("/createAdvertisement", fd)
             .then((data) => {
-                console.log(data)
-                console.log(values)
+                console.log(data);
+                console.log(values);
             })
             .catch((err) => console.log(err));
     };
@@ -84,11 +98,11 @@ const AdvertisementForm = () => {
                     <span className="text-danger">
                         {" "}
                         Please note, each advertisment will require a one time
-                        payment of N1000 only.{" "}
+                        payment of N10,000 only.{" "}
                     </span>
                 </div>
                 <div className="row g-5">
-                    <div className="col">
+                    <div className=" col-sm-12 col-lg-6">
                         <div class="form-floating mb-3">
                             <input
                                 type="text"
@@ -100,8 +114,8 @@ const AdvertisementForm = () => {
                             <label for="floatingInput">Product Name</label>
                         </div>
                     </div>
-                    <div className="col">
-                        <div class="form-floating">
+                    <div className="col-sm-12 col-lg-6">
+                        <div class="form-floating mb-3">
                             <input
                                 type="text"
                                 class="form-control"
@@ -131,6 +145,27 @@ const AdvertisementForm = () => {
                         </div>
                     </div>
                 </div>
+                <div className="row ">
+                    <div
+                        className="col "
+                        style={{
+                            maxWidth: "100% !important",
+                            overflow: "hidden",
+                        }}
+                    >
+                        <FileUploader
+                            handleChange={handleChange}
+                            name="file"
+                            types={fileTypes}
+                            maxSize={1}
+                            classes="col w-100"
+                            children={<div className="divStyle">
+                               {file?file?.name:" Select Image / Drop Image Here"}
+                            </div>}
+                        />
+                    </div>
+                </div>
+
                 <div>
                     <button
                         type="button"

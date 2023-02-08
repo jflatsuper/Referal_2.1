@@ -26,21 +26,24 @@ const AdvertisementScreen = () => {
                     <h3>Mark</h3>
                     <img src={link} /> <h3>t</h3>
                 </div>
-               
-                <button
-                    className="rowItem btn btn-link"
-                    data-bs-toggle="modal"
-                    type="button"
-                    data-bs-target="#exampleModal"
-                    style={{
-                        cursor: "pointer",
-                        textDecoration: "none",
-                        color: "orange",
-                    }}
-                >
-                    <Plus />
-                    <div>Add Advertisement</div>
-                </button>
+                <div>
+                    {" "}
+                    <button
+                        className="rowItem btn btn-link"
+                        data-bs-toggle="modal"
+                        type="button"
+                        data-bs-target="#exampleModal"
+                        style={{
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            color: "orange",
+                            height: "max-content",
+                        }}
+                    >
+                        <Plus />
+                        <div>Add Advertisement</div>
+                    </button>
+                </div>
             </div>
             {/* <div className="rowItem" style={{ color: "orange", gap: "10px" }}>
         <img src={link} /> <h3>Market</h3>
@@ -48,6 +51,14 @@ const AdvertisementScreen = () => {
             <div>
                 <AdCard data={ads} />
             </div>
+            {/* <div className="pt-5 rowItem justify-content-center">
+                <button
+                    type="button"
+                    className="btn btn-md btn-warning editbtn"
+                >
+                    Load More
+                </button>
+            </div> */}
 
             <div
                 className="modal fade modal-xl "
@@ -56,8 +67,11 @@ const AdvertisementScreen = () => {
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-fullscreen-md-down " > 
-                    <div className="modal-content" style={{borderRadius:'16px'}}>
+                <div className="modal-dialog modal-fullscreen-md-down ">
+                    <div
+                        className="modal-content"
+                        style={{ borderRadius: "16px" }}
+                    >
                         {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">
                                 Add Product
@@ -69,8 +83,9 @@ const AdvertisementScreen = () => {
                                 aria-label="Close"
                             ></button>
                         </div> */}
-                        <div className="modal-body px-0 py-0"><AdvertisementForm/></div>
-                      
+                        <div className="modal-body px-0 py-0">
+                            <AdvertisementForm />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,8 @@ class Market extends Model
         "link",
         "transaction_id",
         "active",
-        'approved',    
+        'approved', 
+        'image'   
 
 
     ];

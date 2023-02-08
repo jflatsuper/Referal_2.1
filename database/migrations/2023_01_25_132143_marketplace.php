@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('transaction_id')->nullable();
             $table->boolean('active')->default(false);
             $table->boolean('approved')->default(false);
+            $table->json('image')->nullable();
+            $table->dateTime('expiry_date');
             $table->timestamps();
         });
     }

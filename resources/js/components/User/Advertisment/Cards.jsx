@@ -1,17 +1,24 @@
 import { Button } from "bootstrap";
-import React from "react";
+import React, { useState } from "react";
 import largeIcon from "../../../../../public/icons/EAZYEARN LOGO 64PX BLUE.svg";
+import ChevDown from "../../icons/ChevDown";
 const AdCard = ({ data }) => {
     return (
         <>
             {" "}
-            <div className="row g-5">
+            <div className="row gx-5">
                 {data?.map((item) => {
+                    const image = JSON.parse(item?.image);
                     return (
                         <div className="col-md-4 col-lg-3 col-sm-12">
                             <div
                                 className="card marketCard  "
-                                style={{ color: "black", cursor: "pointer" }}
+                                style={{
+                                    color: "black",
+                                    cursor: "pointer",
+                                    backgroundImage: `url(${image?.path})`,
+                                    backgroundSize: "cover",
+                                }}
                             >
                                 <div
                                     className="card-body   justify-content-space-between"
@@ -23,23 +30,42 @@ const AdCard = ({ data }) => {
                                         overflowX: "hidden",
                                     }}
                                 >
-                                    <div className="rowItem">
-                                        <img
-                                            src={largeIcon}
-                                            class=""
-                                            alt="..."
-                                        />
-                                        <div className="singleLine h4">
-                                            {item?.name}
+                                    <div className=" advertCard">
+                                        <div className="rowItem">
+                                            <img
+                                                src={largeIcon}
+                                                class=""
+                                                alt="..."
+                                            />
+                                            <div className="singleLine h4">
+                                                {item?.name}
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="rowItem 
+                                            d-lg-none chev"
+                                            style={{ justifyContent: "center" }}
+                                        >
+                                            <ChevDown />
+                                        </div>
+                                        <div
+                                            className={`rowItem fourLineText description `}
+                                        >
+                                            {item?.description}
                                         </div>
                                     </div>
 
-                                    <div className="rowItem twoLineText">
-                                        {item?.description}
-                                    </div>
                                     {item.link && (
                                         <div className="rowItem">
-                                            <button className="btn btn-outline-primary" onClick={()=>window.open(item.link,'_blank')}>
+                                            <button
+                                                className="btn btn-secondary"
+                                                onClick={() =>
+                                                    window.open(
+                                                        item.link,
+                                                        "_blank"
+                                                    )
+                                                }
+                                            >
                                                 Visit Link
                                             </button>
                                         </div>
@@ -50,14 +76,7 @@ const AdCard = ({ data }) => {
                     );
                 })}
             </div>
-            <div className="pt-5 rowItem justify-content-center">
-                <button
-                    type="button"
-                    className="btn btn-md btn-warning editbtn"
-                >
-                    Load More
-                </button>
-            </div>
+           
         </>
     );
 };
