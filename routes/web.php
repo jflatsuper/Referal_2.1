@@ -16,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
   return view('welcome');
 });
+Route::get('/about', function () {
+  return view('about');
+})->name('about');
+
+Route::get('/vendors', [App\Http\Controllers\Vendor\VendorController::class, 'vendorPage'])->name('vendors');
+
+Route::get('/t&c', function () {
+  return view('terms');
+})->name('terms');
+Route::get('/faq', function () {
+  return view('faq');
+})->name('faq');
+
+
 
 Auth::routes();
 Route::middleware(["auth"])->group(function () {

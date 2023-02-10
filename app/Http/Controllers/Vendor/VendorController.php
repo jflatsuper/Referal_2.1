@@ -3,13 +3,20 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\VendorCode;
 use DB;
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
+    protected $specificFields = ['first_name','username', 'surname', 'email', 'link', 'account_status', 'id','created_at'];
     //
+    public function vendorPage()
+    {
+        $vendorData=User::where(['user_type'=>'vendor','account_status'=>'active'])->get($this->specificFields);
+        return view('vendor')->with(['vendor'=>$vendorData]);
+    }
     public function getAllVendorCodes()
     {
         return VendorCode::get();
