@@ -24,6 +24,7 @@
         "react-drag-drop-files": "^2.3.8",
         "react-router": "^6.6.1",
         "react-router-dom": "^6.6.1",
+        "startbootstrap-modern-business": "^5.0.6",
         "yup": "^0.32.11"
     }
 }
