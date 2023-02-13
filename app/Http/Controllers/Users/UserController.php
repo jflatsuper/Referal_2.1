@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Models\Account;
+use App\Models\Withdrawal;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -11,12 +13,20 @@ use Validator;
 
 class UserController extends Controller
 {
-    protected $specificFields = ['first_name', 'surname', 'email', 'link', 'account_status', 'id'];
+    protected $specificFields = ['first_name', 'surname', 'email', 'link', 'account_status', 'id','created_at'];
     public function getAllUsers(Request $request)
     {
 
         $users = User::whereNot('user_type', 'superAdmin')->get();
         return $users->makeHidden("password");
+    }
+    public function getSiteStats()
+    {
+        $users = User::whereNot('user_type', 'superAdmin')->count();
+        $compWith = Withdrawal::where('complete', true)->count();
+        $pendingWith = Withdrawal::where('complete', false)->count();
+        $balance = Account::where('user_id', Auth::id())->first();
+        return response()->json(['users' => $users, 'completed' => $compWith, 'pending' => $pendingWith, 'account' => $balance]);
     }
     public function getCurrentUser()
     {

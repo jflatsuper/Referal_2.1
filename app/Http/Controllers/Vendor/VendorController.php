@@ -19,7 +19,7 @@ class VendorController extends Controller
     }
     public function getAllVendorCodes()
     {
-        return VendorCode::get();
+        return VendorCode::where('status',false)->get();
 
     }
     public function createVerificationCodes(Request $request)

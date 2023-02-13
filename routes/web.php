@@ -107,6 +107,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     }
   )->name('ad_transactions');
   Route::get('/getAllUsers', [App\Http\Controllers\Users\UserController::class, 'getAllUsers']);
+  Route::get('/getSiteStats', [App\Http\Controllers\Users\UserController::class, 'getSiteStats']);
   Route::get('/getAllVendors', [App\Http\Controllers\Users\UserController::class, 'getAllVendors']);
   Route::get('/getAllVendorCodes', [App\Http\Controllers\Vendor\VendorController::class, 'getAllVendorCodes']);
   Route::post('/createVendorCodes', [App\Http\Controllers\Vendor\VendorController::class, 'createVerificationCodes']);

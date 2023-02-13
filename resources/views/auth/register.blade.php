@@ -116,7 +116,7 @@
                             <label for="link" class="col-md-4 col-form-label text-md-end">{{ __('Link') }}</label>
 
                             <div class="col-md-6">
-                                <input id="link" type="text" class="form-control @error('link') is-invalid @enderror" name="link" required >
+                                <input id="link" type="text" class="form-control @error('link') is-invalid @enderror" name="link" >
 
                                 @error('text')
                                     <span class="invalid-feedback" role="alert">

@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import DefaultCard from "./cards/Card";
 import largeIcon from "../../../public/icons/EAZYEARN LOGO 64PX BLUE.svg";
 import smallIcon from "../../../public/icons/EAZYEARN LOGO 16PX BLUE.svg";
 import copy from "../../../public/icons/copy.svg";
-import { ref } from "yup";
 import dayjs from "dayjs";
 import Withdraw from "./icons/Withdraw";
 import Profile from "./icons/Profile";

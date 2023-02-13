@@ -13,7 +13,7 @@ class TransactionController extends Controller
     public function getAllUserTransactions()
     {
         $user = Auth::id();
-        $transactions = Transaction::where('user_id', $user)->get();
+        $transactions = Transaction::where('user_id', $user)->orderBy('created_at','DESC')->get();
         return response()->json($transactions);
 
     }

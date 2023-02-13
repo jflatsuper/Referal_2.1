@@ -67,8 +67,8 @@ class RegisterController extends Controller
                 'string',
                 'exists:verification,verif_code',
             ],
-            'ref_code' => ['string'],
-            'link' => ['string']
+            'ref_code' => ['string','nullable'],
+            'link' => ['string','nullable']
         ]);
     }
     public function register(Request $data)

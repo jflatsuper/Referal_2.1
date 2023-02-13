@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.adminlayout')
 
 @section('content')
-<div class="container">
+
     <div id="create_ven"></div>
-</div>    
+  
 
 @endsection
