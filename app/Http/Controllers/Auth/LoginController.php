@@ -40,7 +40,7 @@ class LoginController extends Controller
             return redirect()->intended($direction);
         } else {
             return redirect()->back()->withErrors([
-                'username' => 'Snap! you are done!'
+                'password' => 'Invalid Password'
             ]);
         }
     }

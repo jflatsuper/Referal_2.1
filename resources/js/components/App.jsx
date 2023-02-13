@@ -68,7 +68,9 @@ function App() {
                                             style: "currency",
                                             currency: "NGN",
                                             minimumFractionDigits: 0,
-                                        }).format(user?.money_balance)}{" "}
+                                        }).format(
+                                            user?.money_balance ?? 0
+                                        )}{" "}
                                         <hr />
                                         {/* {user?.money_balance} */}
                                     </div>
@@ -79,23 +81,31 @@ function App() {
                                 style={{ justifyContent: "space-between" }}
                             >
                                 <div className="quickLink">
-                                  <a href="/withdrawals"><Withdraw /></a>  
+                                    <a href="/withdrawals">
+                                        <Withdraw />
+                                    </a>
                                 </div>
                                 <div className="quickLink">
-                                    <a href="/account"><Profile /></a>
+                                    <a href="/account">
+                                        <Profile />
+                                    </a>
                                 </div>
                                 <div className="quickLink">
-                                   <a href="/transactions"><Transaction /></a> 
+                                    <a href="/transactions">
+                                        <Transaction />
+                                    </a>
                                 </div>
                                 <div className="quickLink">
-                                   <a href="/market"><Market /></a> 
+                                    <a href="/market">
+                                        <Market />
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="">
                         <div className="row gx-3 gy-3 mb-5">
-                        <div className="col-6 ">
+                            <div className="col-6 ">
                                 <div className="eazyCol p-3">
                                     <h6>Current Balance</h6>
                                     <div
@@ -105,19 +115,20 @@ function App() {
                                             // justifyContent: "center",
                                         }}
                                     >
-                                      
                                         <div
                                             style={{
                                                 fontSize: "16px",
                                                 fontWeight: 500,
-                                                color:'burlywood'
+                                                color: "burlywood",
                                             }}
                                         >
-                                          {Intl.NumberFormat("en-US", {
+                                            {Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency: "NGN",
                                                 minimumFractionDigits: 0,
-                                            }).format(user?.money_balance)}{" "}
+                                            }).format(
+                                                user?.money_balance ?? 0
+                                            )}{" "}
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +140,7 @@ function App() {
                                         className="rowItem"
                                         style={{
                                             alignItems: "center",
-                                            gap:'3px'
+                                            gap: "3px",
                                             // justifyContent: "center",
                                         }}
                                     >
@@ -138,7 +149,7 @@ function App() {
                                             style={{
                                                 fontSize: "16px",
                                                 fontWeight: 500,
-                                                color:'burlywood'
+                                                color: "burlywood",
                                             }}
                                         >
                                             {user?.point_balance}
@@ -160,7 +171,7 @@ function App() {
                                             style={{
                                                 fontSize: "16px",
                                                 fontWeight: 500,
-                                                color:'burlywood'
+                                                color: "burlywood",
                                             }}
                                         >
                                             {referal?.length}
@@ -170,8 +181,9 @@ function App() {
                             </div>
                             <div className="col-6 ">
                                 <div className="eazyCol p-3">
-                                    <h6 className="capitalize">{String(user?.user_type)}{" "}
-                                            {"account"}</h6>
+                                    <h6 className="capitalize">
+                                        {String(user?.user_type)} {"account"}
+                                    </h6>
                                     <div
                                         className="rowItem"
                                         style={{
@@ -183,7 +195,7 @@ function App() {
                                             style={{
                                                 fontSize: "16px",
                                                 fontWeight: 500,
-                                                color:'burlywood'
+                                                color: "burlywood",
                                             }}
                                         >
                                             {user?.username}
@@ -192,7 +204,6 @@ function App() {
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 <div className="homeScreen d-none d-lg-block">
@@ -229,7 +240,9 @@ function App() {
                                                 style: "currency",
                                                 currency: "NGN",
                                                 minimumFractionDigits: 0,
-                                            }).format(user?.money_balance)}{" "}
+                                            }).format(
+                                                user?.money_balance ?? 0
+                                            )}{" "}
                                             {/* {user?.money_balance} */}
                                         </div>
                                     </div>
@@ -371,36 +384,38 @@ function App() {
                                 }}
                                 className="py-4"
                             >
-                                {referal?.map((item) => {
-                                    return (
-                                        <div
-                                            className="rowItem py-3 px-3 mb-3 rounded"
-                                            style={{
-                                                width: "100%",
-                                                justifyContent: "space-between",
-                                                backgroundColor: "#003366",
-                                            }}
-                                        >
+                                {referal[0]?.refFirstName?.length &&
+                                    referal?.map((item) => {
+                                        return (
                                             <div
-                                                style={{ fontWeight: 500 }}
-                                                className="maxWidth singleLine"
+                                                className="rowItem py-3 px-3 mb-3 rounded"
+                                                style={{
+                                                    width: "100%",
+                                                    justifyContent:
+                                                        "space-between",
+                                                    backgroundColor: "#003366",
+                                                }}
                                             >
-                                                {" "}
-                                                {item?.refFirstName}
-                                                {item?.refSurname}
+                                                <div
+                                                    style={{ fontWeight: 500 }}
+                                                    className="maxWidth singleLine"
+                                                >
+                                                    {" "}
+                                                    {item?.refFirstName}
+                                                    {item?.refSurname}
+                                                </div>
+                                                <div className="maxWidth singleLine">
+                                                    {" "}
+                                                    {item?.refUsername}
+                                                </div>
+                                                <div className="maxWidth singleLine">
+                                                    {dayjs(
+                                                        item?.refcreated
+                                                    ).fromNow()}
+                                                </div>
                                             </div>
-                                            <div className="maxWidth singleLine">
-                                                {" "}
-                                                {item?.refUsername}
-                                            </div>
-                                            <div className="maxWidth singleLine">
-                                                {dayjs(
-                                                    item?.refcreated
-                                                ).fromNow()}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
                             </div>
                         </div>
 

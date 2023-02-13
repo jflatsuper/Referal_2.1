@@ -9,7 +9,7 @@
                         <div class="col-lg-8 col-xl-7 col-xxl-6">
                             <div class="my-5 text-center text-xl-start">
                                 <h1 class="display-5 fw-bolder text-white mb-2">Earning made  <span style="color:orange">EAZY.</span> </h1>
-                                <p class="lead fw-normal text-white-50 mb-4">Take advantage of our Referal Marketing strategy and earn as you refer. Your network turned PROFIT with EazyEarn&#8482;.</p>
+                                <p class="lead fw-normal text-white-50 mb-4">An easier way to earn more into your bank account anytime any day. The goal is to give access to thousands of People to learn online and earn easily irrespective of their status</p>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                 @if (Route::has('login'))
                 @auth
