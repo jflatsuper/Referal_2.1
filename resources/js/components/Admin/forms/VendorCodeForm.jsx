@@ -1,31 +1,95 @@
 import React, { useCallback, useState } from "react";
+import { useFormik } from "formik";
 import axios from "axios";
+import { last } from "lodash";
 const VendorCreateForm = ({ vendors }) => {
-    const [currentVendor, setCurrentVendor] = useState(null);
-    const onCreateCode = useCallback(
-        (number = 1) => {
-            axios
-                .post("/createVendorCodes", {
-                    vendor: currentVendor,
-                    " number": number,
-                })
-                .then((value) => {
-                    console.log(value);
-                    return value;
-                });
+    const onCreateCode = useCallback((number = 1, currentVendor) => {
+        console.log(number, currentVendor);
+        axios
+            .post("/createVendorCodes", {
+                vendor: currentVendor,
+                number: number,
+            })
+            .then((value) => {
+                console.log(value);
+                return value;
+            });
+    }, []);
+    const formikProps = useFormik({
+        initialValues: {
+            number: 10,
+            vendor: {
+                id: null,
+                first_name: "",
+                surname: "",
+            },
         },
-        [currentVendor]
-    );
+        onSubmit: (values) => {
+            onCreateCode(values?.number, values?.vendor?.id);
+        },
+        enableReinitialize: true,
+    });
     return (
-        <div>
+        <div
+            className="p-3"
+            style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                display: "flex",
+                flexDirection: "column",
+                gap: "40px",
+            }}
+        >
+            <div
+                className="rowItem"
+                style={{ justifyContent: "space-between" }}
+            >
+                <div>
+                    <h4>
+                        <b>Add New Vendor Code</b>
+                    </h4>
+                </div>
+                <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
             <form>
                 <div>
-                    <div className="row">
-                        {" "}
-                        click this button and select a vendor to create a code
-                        of him
+                    <div className="row g-5">
+                        <div className=" col-sm-12 col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="floatingInput"
+                                    value={formikProps.values.vendor.first_name}
+                                    onChange={formikProps.handleChange(
+                                        "vendor"
+                                    )}
+                                />
+                                <label htmlFor="floatingInput">Vendor</label>
+                            </div>
+                        </div>
+                        <div className="col-sm-12 col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="floatingPassword"
+                                    value={formikProps.values.number}
+                                    onChange={formikProps.handleChange(
+                                        "number"
+                                    )}
+                                />
+                                <label for="floatingPassword">
+                                    Number of codes
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <input className="form-control" />
                     <div className="btn-group">
                         <button
                             type="button"
@@ -42,7 +106,12 @@ const VendorCreateForm = ({ vendors }) => {
                                 <a
                                     key={item.id}
                                     class="dropdown-item"
-                                    onClick={() => setCurrentVendor(item.id)}
+                                    onClick={() =>
+                                        formikProps.setFieldValue(
+                                            "vendor",
+                                            item
+                                        )
+                                    }
                                 >
                                     {item?.first_name} {item?.surname}
                                 </a>
@@ -50,7 +119,7 @@ const VendorCreateForm = ({ vendors }) => {
                         </div>
                     </div>
                     <button
-                        onClick={() => onCreateCode()}
+                        onClick={formikProps.handleSubmit}
                         className="btn btn-primary"
                     >
                         Create code

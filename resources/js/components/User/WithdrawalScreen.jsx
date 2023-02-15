@@ -124,6 +124,7 @@ const WithdrawalScreen = () => {
                 className="modal fade modal-xl "
                 id="exampleModal"
                 tabindex="-1"
+                role="dialog"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >

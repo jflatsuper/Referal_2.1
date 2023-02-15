@@ -39,8 +39,8 @@ const AccountEditForm = ({ account_name, account_num, bank }) => {
                 <div>
                     <h5 style={{ color: "black" }}>Bank Details</h5>
                 </div>
-                <div className="row g-5">
-                    <div className="col">
+                <div className="row gx-5 gy-3">
+                    <div className="col-sm-12 col-lg-6">
                         <div class="form-floating mb-3">
                             <input
                                 type="text"
@@ -52,7 +52,7 @@ const AccountEditForm = ({ account_name, account_num, bank }) => {
                             <label for="floatingInput">Bank</label>
                         </div>
                     </div>
-                    <div className="col">
+                    <div className="col-sm-12 col-lg-6">
                         <div class="form-floating">
                             <input
                                 type="text"

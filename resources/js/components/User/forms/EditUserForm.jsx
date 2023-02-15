@@ -33,8 +33,8 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                 <div>
                     <h5 style={{ color: "black" }}>User Information</h5>
                 </div>
-                <div className="row g-5">
-                    <div className="col">
+                <div className="row row gx-5 gy-3">
+                    <div className="col-sm-12 col-lg-6">
                         <div class="form-floating mb-3">
                             <input
                                 type="text"
@@ -46,7 +46,7 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                             <label for="floatingInput">First Name</label>
                         </div>
                     </div>
-                    <div className="col">
+                    <div className="col-sm-12 col-lg-6">
                         <div class="form-floating">
                             <input
                                 type="text"
@@ -59,7 +59,7 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                         </div>
                     </div>
                 </div>
-                <div className="row g-5">
+                <div className="row row gx-5 gy-3">
                     <div className="col-lg-7 col-md-7 col-sm-12">
                         <div class="form-floating mb-3">
                             <input

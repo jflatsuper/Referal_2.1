@@ -131,7 +131,7 @@ function HomePage() {
                         </div>
                         <div className="col-6 ">
                             <div className="eazyCol p-3">
-                                <h6>Complete Withdrawals</h6>
+                                <h6 className="singleLine">Complete Withdrawals</h6>
                                 <div
                                     className="rowItem"
                                     style={{
@@ -155,7 +155,7 @@ function HomePage() {
                         </div>
                         <div className="col-6 ">
                             <div className="eazyCol p-3">
-                                <h6>Pending Withdrawals</h6>
+                                <h6 className="singleLine">Pending Withdrawals</h6>
                                 <div
                                     className="rowItem"
                                     style={{
@@ -177,7 +177,7 @@ function HomePage() {
                         </div>
                         <div className="col-6 ">
                             <div className="eazyCol p-3">
-                                <h6 className="capitalize">
+                                <h6 className="capitalize ">
                                    Active Users
                                 </h6>
                                 <div

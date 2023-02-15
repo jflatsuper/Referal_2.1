@@ -17,8 +17,13 @@ import "./components/User/TransactionScreen";
 import "./components/User/SettingsScreen";
 import "./components/User/AdvertisementScreen";
 import "./components/User/WithdrawalScreen";
+import "./components/User/AffiliateScreen";
+import "./components/User/ELearning";
 
 
 import "./components/Admin/Home";
 import "./components/Admin/TransactionScreen";
 import "./components/Admin/VendCodeScreen";
+import "./components/Admin/WithdrawalRequestScreen";
+import "./components/Admin/UsersControlScreen";
+import "./components/Admin/NotificationScreen";

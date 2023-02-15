@@ -8,8 +8,7 @@ import VendorCreateForm from "./forms/VendorCodeForm";
 const VendorManagementScreen = () => {
     const [vendorCodes, setVendorCodes] = useState([]);
     const [vendors, setVendors] = useState([]);
-    const [currentUser,setCurrentUser]=useState()
-
+    const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
         axios.get("/getAllVendorCodes").then((value) => {
@@ -85,7 +84,7 @@ const VendorManagementScreen = () => {
                                         data-bs-toggle="modal"
                                         data-bs-target="#vendorModal"
                                         onClick={() => {
-                                            setCurrentUser(item)
+                                            setCurrentUser(item);
                                         }}
                                         className="rowItem py-3 px-3 mb-3 rounded btn"
                                         style={{
@@ -100,13 +99,12 @@ const VendorManagementScreen = () => {
                                             className="maxWidth singleLine"
                                         >
                                             {" "}
-                                            {item?.first_name}
-                                            {item?.surname}
+                                            {item?.first_name} {item?.surname}
                                         </div>
-                                        <div className="maxWidth singleLine">
+                                        {/* <div className="maxWidth singleLine">
                                             {" "}
                                             {item?.username}
-                                        </div>
+                                        </div> */}
                                         <div className="maxWidth singleLine">
                                             {dayjs(item?.created_at).fromNow()}
                                         </div>
@@ -116,11 +114,6 @@ const VendorManagementScreen = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="row">
-                {vendorCodes.map((item) => (
-                    <div className="row"> {item?.verif_code}</div>
-                ))}
             </div>
             <div
                 className="modal fade modal-xl "
@@ -132,13 +125,44 @@ const VendorManagementScreen = () => {
                 <div className="modal-dialog modal-fullscreen-md-down ">
                     <div
                         className="modal-content"
-                        style={{ borderRadius: "16px", color: "black" }}
+                        style={{ borderRadius: "16px", color: "black",backgroundColor:'lightgray' }}
                     >
-                        <div className="modal-body px-0 py-0">
-                            <div>
+                        <div
+                            className="modal-body p-3"
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "40px",
+                            }}
+                        >
+                            <div
+                                className="rowItem"
+                                style={{ justifyContent: "space-between" }}
+                            >
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
                                 <div>
-                                    cfdfced
-                                    {currentUser?.first_name} {" "}{currentUser?.surname}
+                                    <b>
+                                        {currentUser?.first_name}{" "}
+                                        {currentUser?.surname}
+                                    </b>
+                                </div>
+                            </div>
+                            <div><b> Username:</b> {currentUser?.username}</div>
+                            <div>
+                                <h4>Coupon Codes</h4>
+                                <div>
+                                    {[...vendorCodes]
+                                        .filter(
+                                            (item) => item?.vendor_id == currentUser?.id
+                                        )
+                                        .map((item) => (
+                                            <div key={item} className="card p-3 my-3">{item.verif_code}</div>
+                                        ))}
                                 </div>
                             </div>
                         </div>

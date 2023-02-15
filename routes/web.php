@@ -62,13 +62,27 @@ Route::middleware(['auth', 'isUser'])->group(function () {
   )->name('withdrawals');
   Route::get('/getWithdrawalDetails', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'getWithdrawalDetails'])->name('getWithdrawalDetails');
   Route::post('/createWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'createWithdrawal'])->name('createWithdrawal');
-  
+
   Route::get(
     '/transactions',
     function () {
       return view('users.transaction');
     }
   )->name('transactions');
+  ;
+  Route::get(
+    '/affiliate',
+    function () {
+      return view('users.affiliate');
+    }
+  )->name('affiliate');
+  ;
+  Route::get(
+    '/e_learning',
+    function () {
+      return view('users.elearning');
+    }
+  )->name('elearning');
   ;
   Route::get(
     '/account',
@@ -106,6 +120,27 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
       return view('admin.transactions');
     }
   )->name('ad_transactions');
+  Route::get(
+    '/admin/withrawalRequests',
+    function () {
+      return view('admin.with_request');
+    }
+  )->name('withdrawal_request');
+  Route::get(
+    '/admin/users',
+    function () {
+      return view('admin.user_manage');
+    }
+  )->name('user_management');
+  Route::get(
+    '/admin/notifications',
+    function () {
+      return view('admin.notifications');
+    }
+  )->name('notifications');
+ 
+  Route::get('/getTenUsers', [App\Http\Controllers\Users\UserController::class, 'getTenUsers']);
+  Route::get('/getSearchedUser', [App\Http\Controllers\Users\UserController::class, 'searchForUser']);
   Route::get('/getAllUsers', [App\Http\Controllers\Users\UserController::class, 'getAllUsers']);
   Route::get('/getSiteStats', [App\Http\Controllers\Users\UserController::class, 'getSiteStats']);
   Route::get('/getAllVendors', [App\Http\Controllers\Users\UserController::class, 'getAllVendors']);

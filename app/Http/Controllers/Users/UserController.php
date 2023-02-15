@@ -13,12 +13,29 @@ use Validator;
 
 class UserController extends Controller
 {
-    protected $specificFields = ['first_name', 'surname', 'email', 'link', 'account_status', 'id','created_at'];
+    protected $specificFields = ['first_name','username', 'surname', 'email', 'link', 'account_status','user_type', 'id','created_at'];
     public function getAllUsers(Request $request)
     {
 
         $users = User::whereNot('user_type', 'superAdmin')->get();
         return $users->makeHidden("password");
+    }
+
+    public function getTenUsers(Request $request){
+        $users=User::whereNot('user_type', 'superAdmin')->orderBy('created_at', 'desc')->paginate();
+        return response()->json($users);
+
+    }
+    public function searchForUser(Request $request){
+    $users=User::whereNot('user_type', 'superAdmin')->where('username','LIKE',$request->name)->get();
+    return response()->json($users);
+
+    }
+    public function blockUser(Request $request){
+
+    }
+    public function changeAccountType(Request $request){
+        
     }
     public function getSiteStats()
     {
