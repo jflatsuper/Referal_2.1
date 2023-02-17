@@ -75,9 +75,9 @@ const WithdrawalForm = ({}) => {
 
                 <div>
                     <button
-                        type="button"
+                        type="submit"
                         className="btn btn-md btn-warning editbtn"
-                        onClick={formikProps.handleSubmit}
+                        onClick={()=>formikProps.handleSubmit}
                     >
                         Withdraw
                     </button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -33,9 +34,16 @@ class LoginController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
     public function login(Request $request)
     {
+        $blocked = User::where('username', $request->username)->first()->account_status;
+        if ($blocked === 'blocked') {
+            return redirect()->back()->withErrors([
+                'username' => 'Your account has been blocked. Contact the admin'
+            ]);
+
+        }
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             // Authentication passed...
-            Storage::disk('local')->put('user',Auth::user());
+            Storage::disk('local')->put('user', Auth::user());
             $direction = $this->redirectTo();
             return redirect()->intended($direction);
         } else {

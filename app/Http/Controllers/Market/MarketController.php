@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Transactions\TransactionController;
 use App\Models\Account;
 use App\Models\Market;
+use App\Models\Transaction;
 use App\Models\User;
 use Auth;
 use DateInterval;
@@ -30,7 +31,7 @@ class MarketController extends Controller
     public function getAllAdvertisements()
     {
         $date = today()->format('Y-m-d');
-        $advertisements = Market::where('expiry_date','>=',$date)->get();
+        $advertisements = Market::where('expiry_date', '>=', $date)->get();
         return response()->json($advertisements);
     }
     public function createAdvertisement(Request $data)
@@ -62,11 +63,33 @@ class MarketController extends Controller
                     'transaction_type' => config('enums.transaction_types')['AD']
                 ]);
 
-                $value = $this->create($data->all() + ["image" =>json_encode($image) ]);
+                $value = $this->create($data->all() + ["image" => json_encode($image)]);
                 return $value;
             });
             return response()->json($success);
 
+
+        }
+    }
+    public function dailyBonus()
+    {
+        $date = today()->format('Y-m-d');
+        $todaysTrans = Transaction::where('user_id', Auth::id())->where('transaction_type', config('enums.transaction_types')['DAL'])->where('created_at', '>=', $date)->exists();
+        if (!$todaysTrans) {
+            DB::transaction(function () {
+                $trans = new TransactionController();
+                $trans->createTransaction([
+                    'transaction_id' => uuid_create(),
+                    'user_id' => Auth::id(),
+                    'amount' => 500,
+                    'currency' => config('enums.currency')['P'],
+                    'status' => config('enums.transaction_status')['SUC'],
+                    'transaction_type' => config('enums.transaction_types')['DAL']
+                ]);
+                Account::where("user_id", Auth::id())->increment('point_balance', 500);
+                return response()->json(['successful' => true]);
+            });
+            return response()->json(['successful' => false]);
 
         }
     }
@@ -80,7 +103,7 @@ class MarketController extends Controller
             'description' => $data['description'],
             'active' => true,
             'approved' => true,
-            'image'=>$data['image'],
+            'image' => $data['image'],
             "transaction_id" => $data['transaction_id'],
             'link' => $data['link'],
             'expiry_date' => $date

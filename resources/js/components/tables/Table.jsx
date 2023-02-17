@@ -18,8 +18,8 @@ const DefaultTable = ({ tableHeaders = [], tableBody = [] }) => {
                     console.log(values);
                     return (
                         <tr key={id}>
-                            {values.map((item) => (
-                                <td scope="row" key={item}>
+                            {values.map((item,index) => (
+                                <td scope="row" key={index}>
                                     {item}
                                 </td>
                             ))}

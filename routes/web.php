@@ -58,8 +58,8 @@ Route::middleware(['auth', 'isUser'])->group(function () {
       return view('users.withdrawal');
     }
 
-
   )->name('withdrawals');
+  Route::get('/dailyBonus', [App\Http\Controllers\Market\MarketController::class, 'dailyBonus']);
   Route::get('/getWithdrawalDetails', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'getWithdrawalDetails'])->name('getWithdrawalDetails');
   Route::post('/createWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'createWithdrawal'])->name('createWithdrawal');
 
@@ -138,7 +138,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
       return view('admin.notifications');
     }
   )->name('notifications');
- 
+
+Route::get('/getNotifications', [App\Http\Controllers\Notifications\NotificationController::class, 'getNotifications']);
+Route::get('/getMostRecent', [App\Http\Controllers\Notifications\NotificationController::class, 'getMostRecent']);
+Route::post('/createNotification', [App\Http\Controllers\Notifications\NotificationController::class, 'createNotification']);
+  Route::post('/blockUser', [App\Http\Controllers\Users\UserController::class, 'blockUser']);
+  Route::post('/changeAccountType', [App\Http\Controllers\Users\UserController::class, 'changeAccountType']);
+  Route::get('/getAllValidWithdrawalRequests', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'getAllValidWithdrawalRequests'])->name('getAllValidWithdrawalRequests');
   Route::get('/getTenUsers', [App\Http\Controllers\Users\UserController::class, 'getTenUsers']);
   Route::get('/getSearchedUser', [App\Http\Controllers\Users\UserController::class, 'searchForUser']);
   Route::get('/getAllUsers', [App\Http\Controllers\Users\UserController::class, 'getAllUsers']);

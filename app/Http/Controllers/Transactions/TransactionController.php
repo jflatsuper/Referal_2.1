@@ -13,17 +13,19 @@ class TransactionController extends Controller
     public function getAllUserTransactions()
     {
         $user = Auth::id();
-        $transactions = Transaction::where('user_id', $user)->orderBy('created_at','DESC')->get();
+        $transactions = Transaction::where('user_id', $user)->orderBy('created_at', 'DESC')->get();
         return response()->json($transactions);
 
     }
-    public function createTransaction(array $data){
+    public function createTransaction(array $data)
+    {
         return Transaction::create([
             'transaction_id' => $data['transaction_id'] ?? uuid_create(),
             'user_id' => $data["user_id"],
             'amount' => $data['amount'],
             'status' => $data["status"],
-            'transaction_type' => $data['transaction_type']
+            'transaction_type' => $data['transaction_type'],
+            'currency' => $data['currency'] ?? config('enums.currency')['N']
         ]);
     }
 }

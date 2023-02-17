@@ -74,6 +74,17 @@ class WithdrawalController extends Controller
         return $value;
 
     }
+    public function getAllValidWithdrawalRequests()
+    {
+        $value = DB::table('withdrawals')
+            ->where('complete', false)
+            ->join('users', 'withdrawals.user_id', '=', "users.id")
+            ->join('accounts', 'users.id', '=', 'accounts.user_id')
+            ->select( 'withdrawals.*','users.*', 'accounts.*')
+            ->orderBy('withdrawals.user_id', 'DESC')->get();
+        return $value;
+
+    }
     protected function create(array $data)
     {
         return Withdrawal::create([

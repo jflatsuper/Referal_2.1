@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -19,9 +18,10 @@ return new class extends Migration
             $table->string('reference_id')->nullable();
             $table->string('user_id');
             $table->integer('amount');
-            $table->string ('delivery_email');
+            $table->string('delivery_email');
             $table->boolean('approved')->default(false);
             $table->boolean('complete')->default(false);
+            $table->string('currency')->default(config('enums.currency')['N']);
             $table->timestamps();
         });
     }

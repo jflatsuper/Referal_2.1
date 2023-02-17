@@ -87,7 +87,7 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                 </div>
                 <div>
                 <button
-                    type="button"
+                    type="submit"
                     className="btn btn-md btn-warning editbtn"
                     onClick={formikProps.handleSubmit}
                 >

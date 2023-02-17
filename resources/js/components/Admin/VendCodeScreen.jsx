@@ -54,7 +54,7 @@ const VendorManagementScreen = () => {
             </div>
 
             <div
-                style={{ display: "flex" }}
+                style={{ display: "flex",overflow:'hidden' }}
                 className="card rounded shadow-sm homelargecard homeScreen"
             >
                 <div

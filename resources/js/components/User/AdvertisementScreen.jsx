@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import link from "../../../../public/icons/EAZYEARN LOGO 24PX WHITE.svg";
 import ReactDOM from "react-dom/client";
 import AdCard from "./Advertisment/Cards";
@@ -14,6 +14,13 @@ const AdvertisementScreen = () => {
         });
         return;
     }, []);
+    useEffect(()=>{
+        axios.get("/dailyBonus").then((data) => {
+           console.log(data)
+        });
+        return;
+
+    },[])
 
     return (
         <div className="mainSetting">

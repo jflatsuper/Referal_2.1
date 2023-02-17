@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Notification extends Model
 {
     use HasFactory;
-    protected $table = "transactions";
+    use HasFactory;
+    protected $table = "notifications";
     protected $fillable = [
-        'transaction_id',
-        'user_id',
-        'amount',
-        'status',
-        'transaction_type',
-        'currency'
-        
-
+        'title',
+        'description',
+        'link',
+        'active',
+        'expiry'
     ];
 
     /**
