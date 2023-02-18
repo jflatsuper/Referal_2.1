@@ -312,7 +312,9 @@ function App() {
                                                 textAlign: "center",
                                             }}
                                         >
-                                            {referal?.length}
+                                            {referal[0]?.refFirstName?.length
+                                                ? referal?.length
+                                                : 0}
                                         </div>
                                     </div>
                                 </div>

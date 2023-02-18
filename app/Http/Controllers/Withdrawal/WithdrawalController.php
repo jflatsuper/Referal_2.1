@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Withdrawal;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Transactions\TransactionController;
+use App\Models\Account;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Withdrawal;
@@ -39,6 +40,17 @@ class WithdrawalController extends Controller
     public function createWithdrawal(Request $request)
     {
         $eazyearn = User::where('username', 'eazyearn')->first()->id;
+        $userAcc = Account::where('user_id', Auth::id())->first()->money_balance;
+        $withdrawals = Withdrawal::where('user_id', Auth::id())->where('complete', false)->sum('amount');
+        if ($request->amount > $userAcc) {
+
+            return redirect()->back()->withErrors(['error' => 'Requested amount more than available balance.']);
+
+            // return  response()->json(["error"=>"Requested amount more than available balance"]);
+        } elseif (($request->amount + $withdrawals) > $userAcc) {
+            return redirect()->back()->withErrors(['error' => 'Total Withdrawals greater than current balance']);
+
+        }
         DB::transaction(function () use ($request, $eazyearn) {
             $value = $this->create($request->all());
             $trans_id = uuid_create();
@@ -60,7 +72,8 @@ class WithdrawalController extends Controller
             ]);
             return response()->json($value);
         });
-        response()->json(["error" => "There was an error"]);
+        return redirect()->back()->withErrors(['error' => 'Unable to complete request.']);
+
 
     }
     public function getWithdrawalDetails()
@@ -80,7 +93,7 @@ class WithdrawalController extends Controller
             ->where('complete', false)
             ->join('users', 'withdrawals.user_id', '=', "users.id")
             ->join('accounts', 'users.id', '=', 'accounts.user_id')
-            ->select( 'withdrawals.*','users.*', 'accounts.*')
+            ->select('withdrawals.*', 'users.*', 'accounts.*')
             ->orderBy('withdrawals.user_id', 'DESC')->get();
         return $value;
 

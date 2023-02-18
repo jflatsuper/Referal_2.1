@@ -34,8 +34,13 @@ class LoginController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
     public function login(Request $request)
     {
-        $blocked = User::where('username', $request->username)->first()->account_status;
-        if ($blocked === 'blocked') {
+        $blocked = User::where('username', $request->username)->first();
+        if(!$blocked){
+            return redirect()->back()->withErrors([
+                'username' => 'This account does not exist!'
+            ]);
+        }
+        if ( $blocked->account_status === 'blocked') {
             return redirect()->back()->withErrors([
                 'username' => 'Your account has been blocked. Contact the admin'
             ]);
