@@ -12,7 +12,7 @@ class NotificationController extends Controller
     public function getNotifications()
     {
         $notification = Notification::orderBy('created_at', 'desc')->get();
-        return $notification;
+        return response()->json($notification);
 
     }
     public function createNotification(Request $request)
@@ -25,7 +25,7 @@ class NotificationController extends Controller
     {
         $date = today()->format('Y-m-d');
         $notification = Notification::where('expiry', '>=', $date)->where('active', true)->orderBy('created_at', 'desc')->first();
-        return $notification;
+        return response()->json($notification);
 
 
     }

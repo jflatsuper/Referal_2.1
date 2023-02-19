@@ -104,6 +104,9 @@
 
                             <div class="col-md-6">
                                 <input id="vend_code" type="text" class="form-control @error('vend_code') is-invalid @enderror" name="vend_code" required autocomplete="new-password">
+                                <span class="" role="alert">
+                                        <strong>No Coupon Code?</strong> <a href="{{route('vendors')}}">Get Code.</a>
+                                    </span>
 
                                 @error('vend_code')
                                     <span class="invalid-feedback" role="alert">

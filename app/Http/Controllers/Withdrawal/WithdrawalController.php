@@ -47,6 +47,8 @@ class WithdrawalController extends Controller
             return redirect()->back()->withErrors(['error' => 'Requested amount more than available balance.']);
 
             // return  response()->json(["error"=>"Requested amount more than available balance"]);
+        } elseif ((int) $request->amount < 6000) {
+            return redirect()->back()->withErrors(['error' => 'Minimum withdrawal is 6000']);
         } elseif (($request->amount + $withdrawals) > $userAcc) {
             return redirect()->back()->withErrors(['error' => 'Total Withdrawals greater than current balance']);
 

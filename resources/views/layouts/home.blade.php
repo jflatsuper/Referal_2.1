@@ -65,8 +65,8 @@
                         <a class="link-light small" href="{{ route('terms') }}">Terms & Conditions</a>
                         <span class="text-white mx-1">&middot;</span>
                         <a class="link-light small" href="#!">Contact</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="{{ route('faq') }}">FAQs</a>
+                        <!-- <span class="text-white mx-1">&middot;</span> -->
+                        <!-- <a class="link-light small" href="{{ route('faq') }}">FAQs</a> -->
                     </div>
                 </div>
             </div>

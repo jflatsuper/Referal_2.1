@@ -242,6 +242,17 @@ body {
     white-space: pre-wrap;
     -webkit-box-orient: vertical;
 }
+.singleLineNotif {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:max-content !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    line-clamp: 1;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    -webkit-box-orient: vertical;
+}
 .twoLineText {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -405,14 +416,13 @@ body {
         .description {
             height: 0;
         }
-        .chev{
-
+        .chev {
         }
         &:hover {
             background: rgba(255, 255, 255, 0.8);
             margin-bottom: pxToRem(10);
-            .chev{
-            display: none;
+            .chev {
+                display: none;
             }
             .description {
                 height: 100%;
@@ -434,7 +444,7 @@ body {
     line-clamp: 4;
     -webkit-box-orient: vertical;
 }
- .divStyle {
+.divStyle {
     max-width: 100% !important;
     height: pxToRem(48);
     width: 100%;
@@ -445,6 +455,32 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    color:blue;
+    color: blue;
     cursor: pointer;
 }
+.notif {
+    animation: my-animation 20s 5 ease-in;
+}
+@-moz-keyframes my-animation {
+    from { -moz-transform: translateX(-100%); }
+    to { -moz-transform: translateX(-100%); }
+  }
+  
+  /* for Chrome */
+  @-webkit-keyframes my-animation {
+    from { -webkit-transform: translateX(100%); }
+    to { -webkit-transform: translateX(-100%); }
+  }
+  
+  @keyframes my-animation {
+    from {
+      -moz-transform: translateX(100%);
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
+    to {
+      -moz-transform: translateX(-100%);
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+  }

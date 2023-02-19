@@ -1,15 +1,23 @@
+import axios from "axios";
 import { Button } from "bootstrap";
 import React, { useState } from "react";
 import largeIcon from "../../../../../public/icons/EAZYEARN LOGO 64PX BLUE.svg";
 import ChevDown from "../../icons/ChevDown";
-const AdCard = ({ data }) => {
+const AdCardAdmin = ({ data }) => {
+    const approveAd = async (id) => {
+        const value = axios
+            .post("/approveAdvertisement", { id: id })
+            .then((data) => console.log(data));
+    };
     return (
         <>
             {" "}
+
             <div className="row gx-5 gy-5">
                 {data?.map((item) => {
                     const image = JSON.parse(item?.image);
                     return (
+                        
                         <div className="col-md-4 col-lg-3 col-sm-12">
                             <div
                                 className="card marketCard  "
@@ -56,7 +64,10 @@ const AdCard = ({ data }) => {
                                     </div>
 
                                     {item.link && (
-                                        <div className="rowItem">
+                                        <div
+                                            className="rowItem"
+                                            style={{ gap: "10px" }}
+                                        >
                                             <button
                                                 className="btn btn-secondary"
                                                 onClick={() =>
@@ -68,16 +79,27 @@ const AdCard = ({ data }) => {
                                             >
                                                 Visit Link
                                             </button>
+                                            <form>
+                                            <button
+                                                type="submit"
+                                                className="btn btn-secondary"
+                                                onClick={() =>
+                                                    approveAd(item.id)
+                                                }
+                                            >
+                                                Approve
+                                            </button>
+                                            </form>
                                         </div>
                                     )}
                                 </div>
                             </div>
                         </div>
+                       
                     );
                 })}
             </div>
-           
         </>
     );
 };
-export default AdCard;
+export default AdCardAdmin;

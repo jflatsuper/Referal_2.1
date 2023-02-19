@@ -37,6 +37,7 @@ Route::middleware(["auth"])->group(function () {
   Route::get('/getCurrentUser', [App\Http\Controllers\Users\UserController::class, 'getCurrentUser']);
   Route::get('/getUserWithReferals', [App\Http\Controllers\Users\UserController::class, 'getUserWithReferals']);
 
+  Route::get('/getMostRecent', [App\Http\Controllers\Notifications\NotificationController::class, 'getMostRecent']);
   Route::get('/getAllAdvertisements', [App\Http\Controllers\Market\MarketController::class, 'getAllAdvertisements']);
   Route::get(
     '/getUserAccount',
@@ -138,10 +139,17 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
       return view('admin.notifications');
     }
   )->name('notifications');
+  Route::get(
+    '/admin/advert-management',
+    function () {
+      return view('admin.advertisement');
+    }
+  )->name('advertisement_ad');
 
-Route::get('/getNotifications', [App\Http\Controllers\Notifications\NotificationController::class, 'getNotifications']);
-Route::get('/getMostRecent', [App\Http\Controllers\Notifications\NotificationController::class, 'getMostRecent']);
-Route::post('/createNotification', [App\Http\Controllers\Notifications\NotificationController::class, 'createNotification']);
+  Route::get('/getAllAdvertisementsAd', [App\Http\Controllers\Market\MarketController::class, 'getAllAdvertisementsAd']);
+  Route::post('/approveAdvertisement', [App\Http\Controllers\Market\MarketController::class, 'approveAdvertisement']);
+  Route::get('/getNotifications', [App\Http\Controllers\Notifications\NotificationController::class, 'getNotifications']);
+  Route::post('/createNotification', [App\Http\Controllers\Notifications\NotificationController::class, 'createNotification']);
   Route::post('/blockUser', [App\Http\Controllers\Users\UserController::class, 'blockUser']);
   Route::post('/changeAccountType', [App\Http\Controllers\Users\UserController::class, 'changeAccountType']);
   Route::get('/getAllValidWithdrawalRequests', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'getAllValidWithdrawalRequests'])->name('getAllValidWithdrawalRequests');

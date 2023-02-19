@@ -20,7 +20,7 @@
             
             @endif
                                    
-                                    <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a>
+                                    <a class="btn btn-outline-light btn-lg px-4" href="{{ route('terms') }}">Learn More</a>
                                 </div>
                             </div>
                         </div>

@@ -27,3 +27,4 @@ import "./components/Admin/VendCodeScreen";
 import "./components/Admin/WithdrawalRequestScreen";
 import "./components/Admin/UsersControlScreen";
 import "./components/Admin/NotificationScreen";
+import './components/Admin/AdvertManagementScreen'

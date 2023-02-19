@@ -9,9 +9,12 @@ import Withdraw from "./icons/Withdraw";
 import Profile from "./icons/Profile";
 import Transaction from "./icons/Transaction";
 import Market from "./icons/Market";
+import ArrowRight from "./icons/ArrowRight";
 function App() {
     const [user, setUser] = useState();
     const [referal, setReferal] = useState([]);
+    const [copied, setCopied] = useState(false);
+    const [notification, setNotification] = useState(null);
     useLayoutEffect(() => {
         axios.get("/getUserWithReferals").then((data) => {
             console.log(data);
@@ -20,6 +23,15 @@ function App() {
         });
         return;
     }, []);
+    useEffect(() => {
+        if (copied) {
+            setTimeout(() => setCopied(false), 3000);
+        }
+    }, [copied]);
+    useEffect(() => {
+        axios.get("/getMostRecent").then((data) => setNotification(data.data));
+    }, []);
+
     return (
         <div>
             <div className="pb-5">
@@ -78,22 +90,50 @@ function App() {
                                 className="row p-2"
                                 style={{ justifyContent: "space-between" }}
                             >
-                                <div className="quickLink">
+                                <div
+                                    data-toggle="tooltip"
+                                    title="Withdrawals"
+                                    trigger="hover"
+                                    data-placement="top"
+                                    style={{ color: "white" }}
+                                    className="quickLink"
+                                >
                                     <a href="/withdrawals">
                                         <Withdraw />
                                     </a>
                                 </div>
-                                <div className="quickLink">
+                                <div
+                                    data-toggle="tooltip"
+                                    title="Profile"
+                                    trigger="hover"
+                                    data-placement="top"
+                                    style={{ color: "white" }}
+                                    className="quickLink"
+                                >
                                     <a href="/account">
                                         <Profile />
                                     </a>
                                 </div>
-                                <div className="quickLink">
+                                <div
+                                    data-toggle="tooltip"
+                                    title="Transactions"
+                                    trigger="hover"
+                                    data-placement="top"
+                                    style={{ color: "white" }}
+                                    className="quickLink"
+                                >
                                     <a href="/transactions">
                                         <Transaction />
                                     </a>
                                 </div>
-                                <div className="quickLink">
+                                <div
+                                    data-toggle="tooltip"
+                                    title="Advertisement"
+                                    trigger="hover"
+                                    data-placement="top"
+                                    style={{ color: "white" }}
+                                    className="quickLink"
+                                >
                                     <a href="/market">
                                         <Market />
                                     </a>
@@ -172,7 +212,9 @@ function App() {
                                                 color: "burlywood",
                                             }}
                                         >
-                                            {referal?.length}
+                                            {referal[0]?.refFirstName?.length
+                                                ? referal?.length
+                                                : 0}
                                         </div>
                                     </div>
                                 </div>
@@ -420,6 +462,13 @@ function App() {
                         </div>
 
                         <div style={{}}>
+                            {copied && (
+                                <div
+                                    style={{ color: "orange", float: "right" }}
+                                >
+                                    Copied
+                                </div>
+                            )}
                             <div class="input-group ">
                                 <input
                                     type="text"
@@ -433,11 +482,12 @@ function App() {
                                     class="btn btn-warning"
                                     type="button"
                                     id="button-addon2"
-                                    onClick={() =>
+                                    onClick={() => {
                                         navigator.clipboard.writeText(
                                             `https://eazyearn.site/register?referrer=${user?.ref_link}`
-                                        )
-                                    }
+                                        );
+                                        setCopied(true);
+                                    }}
                                 >
                                     <img src={copy} />
                                 </button>
@@ -447,10 +497,57 @@ function App() {
                 </div>
             </div>
             <div
-                style={{ display: "flex" }}
-                className="card rounded shadow-sm "
+                style={{
+                    display: "flex",
+                    color: "black",
+                    width: "100%",
+                    overflow: "hidden",
+                    flexDirection: "row",
+                }}
+                className="card rounded shadow-sm  "
             >
-                <div className="card-body">I'm an example component!</div>
+                {notification && (
+                    <>
+                        {notification?.link && (
+                            <a
+                                className="btn btn-primary rowItem"
+                                href={notification.link}
+                                style={{ gap: "10px", zIndex: 500 }}
+                            >
+                                Go <ArrowRight />
+                            </a>
+                        )}
+                        <div
+                            className="card-body notif"
+                            style={{
+                                display: "flex",
+                                color: "black",
+                                border: "none",
+                                width: "max-content !important",
+                                width: "100%",
+                                paddingRight: "10px",
+                            }}
+                        >
+                            <div className={"rowItem"} style={{ gap: "20px" }}>
+                                <div
+                                    style={{
+                                        // display: "flex",
+                                        color: "black",
+                                        border: "none",
+                                        width: "max-content !important",
+                                        width: "100%",
+                                        paddingRight: "10px",
+                                    }}
+                                    className="singleLineNotif"
+                                >
+                                    {" "}
+                                    <b className="px-4">{notification?.title}:</b>{" "}
+                                    {notification?.description}
+                                </div>
+                            </div>
+                        </div>{" "}
+                    </>
+                )}
             </div>
         </div>
     );

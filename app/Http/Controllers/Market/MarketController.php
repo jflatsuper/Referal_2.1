@@ -24,14 +24,20 @@ class MarketController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'transaction_id' => ['required'],
+            'transaction_id' => ['string','nullable'],
             'link' => ['string']
         ]);
     }
     public function getAllAdvertisements()
     {
         $date = today()->format('Y-m-d');
-        $advertisements = Market::where('expiry_date', '>=', $date)->get();
+        $advertisements = Market::where('expiry_date', '>=', $date)->where('approved',true)->get();
+        return response()->json($advertisements);
+    }
+    public function getAllAdvertisementsAd()
+    {
+        $date = today()->format('Y-m-d');
+        $advertisements = Market::where('expiry_date', '>=', $date)->where('approved',false)->get();
         return response()->json($advertisements);
     }
     public function createAdvertisement(Request $data)
@@ -42,34 +48,45 @@ class MarketController extends Controller
             return redirect()->back()->withErrors($validatedData);
             #return to register page if validation fails
         } else {
-            $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($data->file('file')->getRealPath(), array("folder" => "eazyearn", "overwrite" => TRUE, "resource_type" => "image"));
-            $image = ['path' => $uploadedFileUrl->getSecurePath(), 'public_id' => $uploadedFileUrl->getPublicId()];
-            $eazyearn = User::where('username', 'eazyearn')->first()->id;
-            $success = DB::transaction(function () use ($data, $eazyearn, $image) {
-                $trans = new TransactionController();
-                $trans->createTransaction([
-                    'transaction_id' => $data['transaction_id'],
-                    'user_id' => $eazyearn,
-                    'amount' => 10000,
-                    'status' => config('enums.transaction_status')['SUC'],
-                    'transaction_type' => config('enums.transaction_types')['AD']
-                ]);
-                Account::where("user_id", $eazyearn)->increment('money_balance', 10000);
-                $trans->createTransaction([
-                    'transaction_id' => $data['transaction_id'],
-                    'user_id' => Auth::id(),
-                    'amount' => -10000,
-                    'status' => config('enums.transaction_status')['SUC'],
-                    'transaction_type' => config('enums.transaction_types')['AD']
-                ]);
-
+            $image='';
+            if($data->file('file')){
+                $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($data->file('file')->getRealPath(), array("folder" => "eazyearn", "overwrite" => TRUE, "resource_type" => "image"));
+                $image = ['path' => $uploadedFileUrl->getSecurePath(), 'public_id' => $uploadedFileUrl->getPublicId()];
+            }
                 $value = $this->create($data->all() + ["image" => json_encode($image)]);
-                return $value;
-            });
-            return response()->json($success);
+                
+            return response()->json($value);
 
 
         }
+    }
+    public function approveAdvertisement(Request $request)
+    {
+        $eazyearn = User::where('username', 'eazyearn')->first()->id;
+        $success = DB::transaction(function () use ($eazyearn, $request) {
+            $nextWeek = time() + (7 * 24 * 60 * 60);
+            $date = date('Y-m-d', $nextWeek);
+            Market::where('id', $request->id)->update(['approved' => true, 'active' => true, "expiry_date" => $date]);
+            $trans = new TransactionController();
+            $id = uuid_create();
+            $trans->createTransaction([
+                'transaction_id' => $id,
+                'user_id' => $eazyearn,
+                'amount' => 10000,
+                'status' => config('enums.transaction_status')['SUC'],
+                'transaction_type' => config('enums.transaction_types')['AD']
+            ]);
+            Account::where("user_id", $eazyearn)->increment('money_balance', 10000);
+            $trans->createTransaction([
+                'transaction_id' => $id,
+                'user_id' => Auth::id(),
+                'amount' => -10000,
+                'status' => config('enums.transaction_status')['SUC'],
+                'transaction_type' => config('enums.transaction_types')['AD']
+            ]);
+            return true;
+        });
+        return response()->json($success);
     }
     public function dailyBonus()
     {
@@ -101,10 +118,8 @@ class MarketController extends Controller
             'user_id' => Auth::id(),
             'name' => $data['name'],
             'description' => $data['description'],
-            'active' => true,
-            'approved' => true,
             'image' => $data['image'],
-            "transaction_id" => $data['transaction_id'],
+            "transaction_id" => uuid_create(),
             'link' => $data['link'],
             'expiry_date' => $date
 
