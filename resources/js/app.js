@@ -20,11 +20,27 @@ import "./components/User/WithdrawalScreen";
 import "./components/User/AffiliateScreen";
 import "./components/User/ELearning";
 
-
 import "./components/Admin/Home";
 import "./components/Admin/TransactionScreen";
 import "./components/Admin/VendCodeScreen";
 import "./components/Admin/WithdrawalRequestScreen";
 import "./components/Admin/UsersControlScreen";
 import "./components/Admin/NotificationScreen";
-import './components/Admin/AdvertManagementScreen'
+import "./components/Admin/AdvertManagementScreen";
+import axios from "axios";
+import swal from "sweetalert";
+const item = axios.interceptors.response.use(
+    undefined,
+    function (error) {
+        if (error.response.status === 444) {
+            return swal({
+                title: error?.response?.data?.status,
+                text: error?.response?.data?.message,
+                icon: "error",
+            });
+        } else {
+            return;
+        }
+    }
+);
+export default item;

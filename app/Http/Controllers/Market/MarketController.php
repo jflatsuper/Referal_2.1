@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Market;
-
-use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Transactions\TransactionController;
 use App\Models\Account;
@@ -10,8 +8,6 @@ use App\Models\Market;
 use App\Models\Transaction;
 use App\Models\User;
 use Auth;
-use DateInterval;
-use DateTime;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -45,7 +41,8 @@ class MarketController extends Controller
         $validatedData = $this->validator($data->all());
 
         if ($validatedData->fails()) {
-            return redirect()->back()->withErrors($validatedData);
+            return response()->json(['status' => "Advert Placement Failure", 'message' => 'You provided invalid values to the system'], 444);
+
             #return to register page if validation fails
         } else {
             $image='';

@@ -44,13 +44,11 @@ class WithdrawalController extends Controller
         $withdrawals = Withdrawal::where('user_id', Auth::id())->where('complete', false)->sum('amount');
         if ($request->amount > $userAcc) {
 
-            return redirect()->back()->withErrors(['error' => 'Requested amount more than available balance.']);
-
-            // return  response()->json(["error"=>"Requested amount more than available balance"]);
-        } elseif ((int) $request->amount < 6000) {
-            return redirect()->back()->withErrors(['error' => 'Minimum withdrawal is 6000']);
+            return response()->json(['status' => "Withdrawal Error", 'message' => 'Requested amount more than available balance.'], 444);
+                  } elseif ((int) $request->amount < 6000) {
+                    return response()->json(['status' => "Withdrawal Error", 'message' => 'Minimum withdrawal Amount is NGN 6000.'], 444);
         } elseif (($request->amount + $withdrawals) > $userAcc) {
-            return redirect()->back()->withErrors(['error' => 'Total Withdrawals greater than current balance']);
+            return response()->json(['status' => "Withdrawal Error", 'message' => 'Total Withdrawals greater than current Balance.'], 444);
 
         }
         DB::transaction(function () use ($request, $eazyearn) {

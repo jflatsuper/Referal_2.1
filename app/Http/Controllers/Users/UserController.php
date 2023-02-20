@@ -98,7 +98,8 @@ class UserController extends Controller
     {
         $validatedData = $this->validator($request->all());
         if ($validatedData->fails()) {
-            return response()->json($validatedData);
+             return response()->json(['status' => "User Error", 'message' => 'Invalid Details Provided.'], 444);
+
 
         }
         $edited = $this->edit($request->all());

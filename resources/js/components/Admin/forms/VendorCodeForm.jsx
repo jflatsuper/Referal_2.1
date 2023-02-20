@@ -9,11 +9,8 @@ const VendorCreateForm = ({ vendors }) => {
             .post("/createVendorCodes", {
                 vendor: currentVendor,
                 number: number,
-            })
-            .then((value) => {
-                console.log(value);
-                return value;
-            });
+            }).then((data) => window.location.reload(true));
+            
     }, []);
     const formikProps = useFormik({
         initialValues: {

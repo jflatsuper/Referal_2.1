@@ -25,6 +25,7 @@
         "react-router": "^6.6.1",
         "react-router-dom": "^6.6.1",
         "startbootstrap-modern-business": "^5.0.6",
+        "sweetalert": "^2.1.2",
         "yup": "^0.32.11"
     }
 }

@@ -506,7 +506,7 @@ function App() {
                 }}
                 className="card rounded shadow-sm  "
             >
-                {notification && (
+                {notification?.title && (
                     <>
                         {notification?.link && (
                             <a

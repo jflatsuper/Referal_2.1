@@ -15,10 +15,9 @@ const AccountEditForm = ({ account_name, account_num, bank }) => {
         //     bank: yup.string(),
         // },
         onSubmit: (values) => {
-            console.log('haha')
             axios.post("/editAccount", {
                 ...values,
-            });
+            }).then((data) => window.location.reload(true));
         },
         enableReinitialize: true,
     });

@@ -7,7 +7,7 @@ const AdCardAdmin = ({ data }) => {
     const approveAd = async (id) => {
         const value = axios
             .post("/approveAdvertisement", { id: id })
-            .then((data) => console.log(data));
+            .then((data) =>window.location.reload(true));
     };
     return (
         <>

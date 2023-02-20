@@ -1,18 +1,20 @@
 import React from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-const UserEditForm = ({ email, first_name, surname, username,phone }) => {
+const UserEditForm = ({ email, first_name, surname, username, phone }) => {
     const formikProps = useFormik({
         initialValues: {
             first_name: first_name,
             surname: surname,
             username: username,
-            phone:phone
+            phone: phone,
         },
         onSubmit: (values) => {
-            axios.post('/editUser',{
-               ... values
-            })
+            axios
+                .post("/editUser", {
+                    ...values,
+                })
+                .then((data) => window.location.reload(true));
         },
         enableReinitialize: true,
     });
@@ -26,7 +28,7 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                     padding: "64px",
                     borderRadius: "16px",
                     backgroundColor: "lightgray",
-                    color:'black'
+                    color: "black",
                 }}
                 className="shadow-sm "
             >
@@ -41,7 +43,9 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                                 class="form-control"
                                 id="floatingInput"
                                 value={formikProps.values.first_name}
-                                onChange={formikProps.handleChange('first_name')}
+                                onChange={formikProps.handleChange(
+                                    "first_name"
+                                )}
                             />
                             <label for="floatingInput">First Name</label>
                         </div>
@@ -53,7 +57,7 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                                 class="form-control"
                                 id="floatingPassword"
                                 value={formikProps.values.surname}
-                                onChange={formikProps.handleChange('surname')}
+                                onChange={formikProps.handleChange("surname")}
                             />
                             <label for="floatingPassword">Surname</label>
                         </div>
@@ -79,21 +83,21 @@ const UserEditForm = ({ email, first_name, surname, username,phone }) => {
                                 class="form-control"
                                 id="floatingPassword"
                                 value={formikProps.values.phone}
-                                onChange={formikProps.handleChange('phone')}
+                                onChange={formikProps.handleChange("phone")}
                             />
                             <label for="floatingPassword">Phone Number</label>
                         </div>
                     </div>
                 </div>
                 <div>
-                <button
-                    type="submit"
-                    className="btn btn-md btn-warning editbtn"
-                    onClick={formikProps.handleSubmit}
-                >
-                    Save
-                </button>
-            </div>
+                    <button
+                        type="submit"
+                        className="btn btn-md btn-warning editbtn"
+                        onClick={formikProps.handleSubmit}
+                    >
+                        Save
+                    </button>
+                </div>
             </div>
         </form>
     );

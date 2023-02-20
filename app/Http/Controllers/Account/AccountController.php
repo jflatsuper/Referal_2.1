@@ -37,7 +37,8 @@ class AccountController extends Controller
     {
         $validatedData = $this->validator($request->all());
         if ($validatedData->fails()) {
-            return response()->json($validatedData);
+            return response()->json(['status' => "Account Error", 'message' => 'Invalid Account Details Provided.'], 444);
+
 
         }
         $edited = $this->edit($request->all());

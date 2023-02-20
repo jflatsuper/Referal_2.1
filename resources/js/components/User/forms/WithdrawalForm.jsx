@@ -10,7 +10,13 @@ const WithdrawalForm = ({}) => {
         onSubmit: (values) => {
             axios.post("/createWithdrawal", {
                 ...values,
-            });
+            }).then(data=>{
+                swal({
+                    title: "Withdrawal Request Created",
+                    text: "Awaiting Approval from EAZYEARN",
+                    icon: "info",
+                }).then((success) => window.location.reload(true));
+            })
         },
         enableReinitialize: true,
     });
@@ -60,7 +66,7 @@ const WithdrawalForm = ({}) => {
                     <div className="col-sm-12 col-lg-12">
                         <div class="form-floating">
                             <input
-                                type="text"
+                                type="number"
                                 class="form-control"
                                 id="floatingPassword"
                                 value={formikProps.values.amount}
@@ -77,7 +83,7 @@ const WithdrawalForm = ({}) => {
                     <button
                         type="submit"
                         className="btn btn-md btn-warning editbtn"
-                        onClick={()=>formikProps.handleSubmit()}
+                        onClick={formikProps.handleSubmit}
                     >
                         Withdraw
                     </button>

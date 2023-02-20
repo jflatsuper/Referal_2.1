@@ -3,11 +3,13 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { FileUploader } from "react-drag-drop-files";
+import swal from "sweetalert";
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 const AdvertisementForm = () => {
     const [file, setFile] = useState(null);
+    const [loading, setLoading] = useState(false);
     const handleChange = (file) => {
         console.log(file);
         setFile(file);
@@ -35,16 +37,22 @@ const AdvertisementForm = () => {
         fd.append("name", values.name);
         fd.append("description", values?.description);
         fd.append("link", values?.link);
-        file &&fd.append("file", file);
+        file && fd.append("file", file);
         fd.append("transaction_id", values?.transaction_id);
-        setLoading(true)
+        setLoading(true);
+        console.log("triggered");
 
         await axios
             .post("/createAdvertisement", fd)
             .then((data) => {
                 console.log(data);
                 console.log(values);
-                setLoading(false)
+                setLoading(false);
+                swal({
+                    title: "Advert Successfully Registered",
+                    text: "Awaiting Approval from EAZYEARN",
+                    icon: "info",
+                }).then((success) => window.location.reload(true));
             })
             .catch((err) => console.log(err));
     };
@@ -57,7 +65,7 @@ const AdvertisementForm = () => {
         onSubmit: (values) => {
             createAdvertisement({
                 ...values,
-                transaction_id: '',
+                transaction_id: "",
             }); // this will close the modal programmatically
             // handleFlutterPayment({
             //     callback: (response) => {
@@ -106,17 +114,34 @@ const AdvertisementForm = () => {
                         Please note, each advertisment will require a one time
                         payment of N10,000 only.{" "}
                     </span>
-                    <div className="my-3"><span className="text-dark">
-                        <b>Step 1</b>: Click the{" "}
-                        <a href="http://wa.me/2348063855762?text=Hello+i+want+to+place+an+advert+on+Eazyearn+site">link to request payment details</a> and send
-                        payment proof. Account will be provided by advertisment
-                        vendor <a href="http://wa.me/2348063855762?text=Hello+i+want+to+place+an+advert+on+Eazyearn+site">here</a>.
-                    </span></div>
-                    <div className="mb-3"><span className="text-dark">
-                       <b>Step 2</b>: Proceed to create your advert in the form below. Advert will be approved once <span className="text-danger"><b>Step 1</b></span>  is completed. 
-                       For complaints, <a href="http://wa.me/2348063855762?text=Hello+i+want+to+place+an+advert+on+Eazyearn+site">click here.</a>.
-                    </span></div>
-                    
+                    <div className="my-3">
+                        <span className="text-dark">
+                            <b>Step 1</b>: Click the{" "}
+                            <a href="http://wa.me/2348063855762?text=Hello+i+want+to+place+an+advert+on+Eazyearn+site">
+                                link to request payment details
+                            </a>{" "}
+                            and send payment proof. Account will be provided by
+                            advertisment vendor{" "}
+                            <a href="http://wa.me/2348063855762?text=Hello+i+want+to+place+an+advert+on+Eazyearn+site">
+                                here
+                            </a>
+                            .
+                        </span>
+                    </div>
+                    <div className="mb-3">
+                        <span className="text-dark">
+                            <b>Step 2</b>: Proceed to create your advert in the
+                            form below. Advert will be approved once{" "}
+                            <span className="text-danger">
+                                <b>Step 1</b>
+                            </span>{" "}
+                            is completed. For complaints,{" "}
+                            <a href="http://wa.me/2348063855762?text=Hello+i+want+to+place+an+advert+on+Eazyearn+site">
+                                click here.
+                            </a>
+                            .
+                        </span>
+                    </div>
                 </div>
                 <div className="row g-5">
                     <div className=" col-sm-12 col-lg-6">

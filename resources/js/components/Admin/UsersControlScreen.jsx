@@ -27,16 +27,22 @@ const UserManagementScreen = () => {
         getUser().then((data) => setUsers([...users, ...data.data]));
     }, []);
     const blockUser = useCallback(() => {
-        axios.post("/blockUser", {
-            user: currentUser.id,
-            status:
-                currentUser.account_status === "blocked" ? "active" : "blocked",
-        });
+        axios
+            .post("/blockUser", {
+                user: currentUser.id,
+                status:
+                    currentUser.account_status === "blocked"
+                        ? "active"
+                        : "blocked",
+            })
+            .then((item) => window.location.reload(true));
     }, [currentUser]);
     const changeUserType = useCallback((values) => {
         values.newtype &&
             values.user &&
-            axios.post("/changeAccountType", values);
+            axios
+                .post("/changeAccountType", values)
+                .then((item) => window.location.reload(true));
     }, []);
     const formikProps = useFormik({
         initialValues: {
@@ -244,8 +250,8 @@ const UserManagementScreen = () => {
                                             </div>
 
                                             <button
-                                                onClick={() =>
-                                                    formikProps.handleSubmit()
+                                                onClick={
+                                                    formikProps.handleSubmit
                                                 }
                                                 className="btn btn-primary"
                                                 type="submit"

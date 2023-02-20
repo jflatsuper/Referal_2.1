@@ -11,7 +11,7 @@ const NotificationForm = () => {
         onSubmit: (values) => {
             axios.post("/createNotification", {
                 ...values,
-            });
+            }).then((data) => window.location.reload(true));;
         },
         enableReinitialize: true,
     });
@@ -80,7 +80,7 @@ const NotificationForm = () => {
                     <button
                         type="submit"
                         className="btn btn-md btn-warning editbtn"
-                        onClick={() => formikProps.handleSubmit()}
+                        onClick={formikProps.handleSubmit}
                     >
                         Save
                     </button>

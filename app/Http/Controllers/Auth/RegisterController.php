@@ -76,6 +76,11 @@ class RegisterController extends Controller
         $TOTAL = 2900; //total amount coming into system from registration
         $value = $data['vend_code'];
         $validatedData = $this->validator($data->all());
+        if (str_contains($data->username, '-') || str_contains($data->username, ' ')) {
+            return redirect()->back()->withErrors([
+                'username' => 'User name must not have spaces in between or - character'
+            ]);
+        }
 
         if ($validatedData->fails()) {
             return redirect()->back()->withErrors($validatedData);
@@ -92,7 +97,14 @@ class RegisterController extends Controller
             } else {
                 //if new,find the user referring the individual--defaults to eazyearn
                 $eazyearn = User::where('username', 'eazyearn')->first()->id;
-                $referee = User::where('username', explode('-', $data->ref_code ?? 'eazyearn')[0])->first()->id;
+                $ref = User::where('username', explode('-', $data->ref_code ?? 'eazyearn')[0])->first();
+                if (!$ref) {
+                    return redirect()->back()->withErrors([
+                        'ref_code' => 'Invalid Referral Code'
+                    ]);
+                }
+
+                $referee = $ref->id;
                 DB::transaction(function () use ($data, $value, $referee, $TOTAL, $eazyearn) {
                     //1.Create new user 
                     $this->create($data->all());

@@ -17,7 +17,7 @@ const WithdrawalScreen = () => {
                 console.log(item);
                 return item?.approved
                     ? item?.completed && completed.push(item)
-                    : item?.amount &&pendingVal.push(item);
+                    : item?.amount && pendingVal.push(item);
             });
             console.log(pendingVal);
             setPending(pendingVal);
@@ -46,6 +46,7 @@ const WithdrawalScreen = () => {
     const handleFlutterPayment = useFlutterwave(config);
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "60px" }}>
+           
             {/* <h1>Hello Test</h1>
 
             <button
@@ -63,11 +64,13 @@ const WithdrawalScreen = () => {
             </button> */}
             <div
                 className="rowItem"
-                style={{ color: "orange", justifyContent: "space-between",alignItems:'center' }}
+                style={{
+                    color: "orange",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}
             >
-                
-                    <h3 className="mb-0">Withdrawals</h3>
-           
+                <h3 className="mb-0">Withdrawals</h3>
 
                 <button
                     className="rowItem btn btn-link"
