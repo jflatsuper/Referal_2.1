@@ -29,13 +29,24 @@ class WithdrawalController extends Controller
         ]);
 
     }
-    public function approveWithdrawal()
+    public function approveWithdrawal(Request $request)
     {
-
+        $success = DB::transaction(function () use ($request) {
+            Transaction::where("transaction_id", $request->trans_id)->update(['status' => 'success']);
+            Withdrawal::where('transaction_id', $request->trans_id)->update(['approved' => true, 'complete' => true]);
+            Account::where('user_id', $request->user_id)->decrement('money_balance', $request->amount);
+            return true;
+        });
+        return response()->json($success);
     }
-    public function declineWithdrawal()
+    public function declineWithdrawal(Request $request)
     {
-
+        $success = DB::transaction(function () use ($request) {
+            Transaction::where("transaction_id", $request->trans_id)->update(['status' => 'cancelled']);
+            Withdrawal::where('transaction_id', $request->trans_id)->update(['approved' => false, 'complete' => true]);
+            return true;
+        });
+        return response()->json($success);
     }
     public function createWithdrawal(Request $request)
     {
@@ -45,15 +56,16 @@ class WithdrawalController extends Controller
         if ($request->amount > $userAcc) {
 
             return response()->json(['status' => "Withdrawal Error", 'message' => 'Requested amount more than available balance.'], 444);
-                  } elseif ((int) $request->amount < 6000) {
-                    return response()->json(['status' => "Withdrawal Error", 'message' => 'Minimum withdrawal Amount is NGN 6000.'], 444);
+        } elseif ((int) $request->amount < 6000) {
+            return response()->json(['status' => "Withdrawal Error", 'message' => 'Minimum withdrawal Amount is NGN 6000.'], 444);
         } elseif (($request->amount + $withdrawals) > $userAcc) {
             return response()->json(['status' => "Withdrawal Error", 'message' => 'Total Withdrawals greater than current Balance.'], 444);
 
         }
         DB::transaction(function () use ($request, $eazyearn) {
-            $value = $this->create($request->all());
             $trans_id = uuid_create();
+            $value = $this->create($request->all() + ['trans_id' => $trans_id]);
+
             $trans = new TransactionController();
 
             $trans->createTransaction([
@@ -102,7 +114,7 @@ class WithdrawalController extends Controller
     {
         return Withdrawal::create([
             'id' => uuid_create(),
-            'transaction_id' => $data['trans_id'] ?? uuid_create(),
+            'transaction_id' => $data['trans_id'],
             'user_id' => Auth::id(),
             'amount' => $data['amount'],
             'delivery_email' => $data['delivery_email'],

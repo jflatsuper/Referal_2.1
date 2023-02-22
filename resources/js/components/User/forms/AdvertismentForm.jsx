@@ -10,9 +10,19 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 const AdvertisementForm = () => {
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [Image, setImageError] = useState();
+    function returnFileSize(number) {
+        if (number >= 1024 && number <= 1048576 * 2) {
+            return true;
+        } else if (number > 1048576 * 2) {
+            return false;
+        }
+    }
     const handleChange = (file) => {
-        console.log(file);
-        setFile(file);
+        setImageError();
+        return returnFileSize(file.target.files[0].size)
+            ? setFile(file.target.files[0])
+            : setImageError("File is larger than limit of 2MB");
     };
     // const config = {
     //     public_key: "FLWPUBK_TEST-c6065db888e7db229f9657428483b4bc-X",
@@ -40,21 +50,19 @@ const AdvertisementForm = () => {
         file && fd.append("file", file);
         fd.append("transaction_id", values?.transaction_id);
         setLoading(true);
-        console.log("triggered");
 
         await axios
             .post("/createAdvertisement", fd)
             .then((data) => {
-                console.log(data);
-                console.log(values);
                 setLoading(false);
-                swal({
-                    title: "Advert Successfully Registered",
-                    text: "Awaiting Approval from EAZYEARN",
-                    icon: "info",
-                }).then((success) => window.location.reload(true));
+                data.status === 200 &&
+                    swal({
+                        title: "Advert Successfully Registered",
+                        text: "Awaiting Approval from EAZYEARN",
+                        icon: "info",
+                    }).then((success) => window.location.reload(true));
             })
-            .catch((err) => console.log(err));
+            .catch((err) => setLoading(false));
     };
     const formikProps = useFormik({
         initialValues: {
@@ -195,20 +203,29 @@ const AdvertisementForm = () => {
                             overflow: "hidden",
                         }}
                     >
-                        <FileUploader
-                            handleChange={handleChange}
-                            name="file"
-                            types={fileTypes}
-                            maxSize={1}
-                            classes="col w-100"
-                            children={
-                                <div className="divStyle">
-                                    {file
-                                        ? file?.name
-                                        : " Select Image / Drop Image Here"}
-                                </div>
-                            }
-                        />
+                        <div>
+                            <div>
+                                <label for="image_uploads">
+                                    Choose images to upload (PNG, JPG)
+                                </label>
+                            </div>
+
+                            <input
+                                type="file"
+                                id="image_uploads"
+                                name="image_uploads"
+                                onChange={handleChange}
+                                accept="image/*,.png,.jpeg,.jpg"
+                                placeholder="Select Image"
+                                style={{
+                                    backgroundColor: "black",
+                                    height: "48px",
+                                    color: "white",
+                                    padding: "10px",
+                                }}
+                            />
+                            {Image && <div className="text-danger"></div>}
+                        </div>
                     </div>
                 </div>
 
@@ -217,6 +234,7 @@ const AdvertisementForm = () => {
                         type="submit"
                         className="btn btn-md btn-warning editbtn"
                         onClick={formikProps.handleSubmit}
+                        disabled={loading}
                     >
                         Save
                     </button>

@@ -160,4 +160,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
   Route::get('/getAllVendors', [App\Http\Controllers\Users\UserController::class, 'getAllVendors']);
   Route::get('/getAllVendorCodes', [App\Http\Controllers\Vendor\VendorController::class, 'getAllVendorCodes']);
   Route::post('/createVendorCodes', [App\Http\Controllers\Vendor\VendorController::class, 'createVerificationCodes']);
+  Route::post('/approveWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'approveWithdrawal'])->name('approveWithdrawal');
+  Route::post('/declineWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'declineWithdrawal'])->name('declineWithdrawal');
+
 });

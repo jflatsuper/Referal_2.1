@@ -9,13 +9,21 @@ dayjs.extend(relativeTime);
 const WithdrawalItem = ({ item }) => {
     return (
         <div className="card bg-light  rowItem">
-            
-             <div style={{backgroundColor:"lightgray",borderTopLeftRadius:"5px",borderBottomLeftRadius:"5px",height:"100%"}} className="px-3 py-3"><img src={wallet} /></div>
+            <div
+                style={{
+                    backgroundColor: "lightgray",
+                    borderTopLeftRadius: "5px",
+                    borderBottomLeftRadius: "5px",
+                    height: "100%",
+                }}
+                className="px-3 py-3"
+            >
+                <img src={wallet} />
+            </div>
             <div
                 className="card-body py-0 rowItem"
                 style={{ justifyContent: "space-between", flexWrap: "wrap" }}
             >
-               
                 <div style={{ color: "black" }}>
                     <b>Created :</b>{" "}
                     {dayjs(item.created_at).format("DD/MM/YYYY")}
@@ -26,7 +34,11 @@ const WithdrawalItem = ({ item }) => {
 
                 <div>
                     <b style={{ color: "black" }}>Status:</b>{" "}
-                    {item?.approved ? "Approved" : "Pending"}
+                    {item?.approved
+                        ? "Approved"
+                        : item?.complete
+                        ? "Cancelled"
+                        : "Pending"}
                 </div>
                 <div
                     data-bs-toggle="tooltip"

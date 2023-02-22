@@ -410,11 +410,13 @@ function App() {
                         className="card-body"
                         style={{
                             display: "flex",
+                            height:'100%',
+                            marginBottom:'10vh',
                             flexDirection: "column",
                             justifyContent: "space-between",
                         }}
                     >
-                        <div style={{ maxHeight: "85%" }}>
+                        <div style={{height:"85%", maxHeight: "85%", overflow: "hidden" }}>
                             <h3>Referrals</h3>
                             <div
                                 style={{
@@ -427,7 +429,12 @@ function App() {
                                 className="py-4"
                             >
                                 {referal[0]?.refFirstName?.length &&
-                                    referal?.map((item) => {
+                                    [
+                                        ...referal,
+                                        ...referal,
+                                        ...referal,
+                                        ...referal,
+                                    ]?.map((item) => {
                                         return (
                                             <div
                                                 className="rowItem py-3 px-3 mb-3 rounded"
@@ -443,7 +450,7 @@ function App() {
                                                     className="maxWidth singleLine"
                                                 >
                                                     {" "}
-                                                    {item?.refFirstName}
+                                                    {item?.refFirstName}{" "}
                                                     {item?.refSurname}
                                                 </div>
                                                 <div className="maxWidth singleLine">
@@ -524,7 +531,6 @@ function App() {
                                 color: "black",
                                 border: "none",
                                 width: "max-content !important",
-                                width: "100%",
                                 paddingRight: "10px",
                             }}
                         >
@@ -535,13 +541,14 @@ function App() {
                                         color: "black",
                                         border: "none",
                                         width: "max-content !important",
-                                        width: "100%",
                                         paddingRight: "10px",
                                     }}
                                     className="singleLineNotif"
                                 >
                                     {" "}
-                                    <b className="px-4">{notification?.title}:</b>{" "}
+                                    <b className="px-4">
+                                        {notification?.title}:
+                                    </b>{" "}
                                     {notification?.description}
                                 </div>
                             </div>

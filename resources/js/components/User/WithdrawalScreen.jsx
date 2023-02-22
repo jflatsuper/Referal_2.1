@@ -13,10 +13,10 @@ const WithdrawalScreen = () => {
         axios("/getWithdrawalDetails").then((data) => {
             const pendingVal = [];
             const completed = [];
-            data.data.map((item) => {
+            data?.data?.map((item) => {
                 console.log(item);
-                return item?.approved
-                    ? item?.completed && completed.push(item)
+                return item?.complete
+                    ?  completed.push(item)
                     : item?.amount && pendingVal.push(item);
             });
             console.log(pendingVal);

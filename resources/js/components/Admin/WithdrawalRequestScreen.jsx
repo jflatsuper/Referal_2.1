@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import DefaultTable from "../tables/Table";
 import dayjs from "dayjs";
+import swal from "sweetalert";
 const WithdrawalRequestScreen = () => {
     const [withdrawals, setWithdrawals] = useState([]);
     useEffect(() => {
@@ -10,6 +11,35 @@ const WithdrawalRequestScreen = () => {
             .get("/getAllValidWithdrawalRequests")
             .then((data) => setWithdrawals(data.data));
     }, []);
+    const approveWithdrawal = async (item) => {
+        axios
+            .post("/approveWithdrawal", {
+                trans_id: item.transaction_id,
+                user_id: item.user_id,
+                amount: item.amount,
+            })
+            .then((item) => {
+                swal({
+                    title: "Withdrawal Approved",
+                    text: "Request Completed",
+                    icon: "success",
+                }).then((item) => window.location.reload(true));
+            });
+    };
+    const cancelWithdrawal = async (item) => {
+        axios
+            .post("/declineWithdrawal", {
+                trans_id: item.transaction_id,
+                user_id: item.user_id,
+            })
+            .then((item) => {
+                swal({
+                    title: "Withdrawal Request Cancelled",
+                    text: "Request Completed",
+                    icon: "success",
+                }).then((item) => window.location.reload(true));
+            });
+    };
     return (
         <div>
             <div
@@ -42,8 +72,10 @@ const WithdrawalRequestScreen = () => {
                             <thead className="table-light">
                                 <tr>
                                     {[
-                                        "",
-                                        "S/N",
+                                        "Approve",
+                                        "Cancel",
+                                        "Account",
+                                        "Bank",
                                         "Username",
                                         "Name on Account",
                                         "Withdrawal Amount",
@@ -64,7 +96,11 @@ const WithdrawalRequestScreen = () => {
                                                 id,
                                                 username,
                                                 amount,
+                                                transaction_id,
+                                                user_id,
                                                 account_name,
+                                                account_num,
+                                                bank,
                                                 money_balance,
                                                 created_at,
                                             },
@@ -75,32 +111,62 @@ const WithdrawalRequestScreen = () => {
                                                     "MMMM D, YYYY"
                                                 );
                                             return {
-                                                index: index + 1,
+                                                account_num,
+                                                bank,
                                                 username,
                                                 account_name,
                                                 amount,
                                                 money_balance,
                                                 date,
+                                                transaction_id,
+                                                user_id,
                                             };
                                         }
                                     )
                                     .map((item, id) => {
-                                        const values = Object.values(item);
+                                        const values = Object?.values(item);
                                         console.log(item);
                                         console.log(values);
                                         return (
                                             <tr key={id}>
                                                 <td>
-                                                    <input
-                                                        type={"checkbox"}
-                                                        defaultChecked
-                                                    />
+                                                    <form>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() =>
+                                                                approveWithdrawal(
+                                                                    item
+                                                                )
+                                                            }
+                                                        >
+                                                            Approve
+                                                        </button>
+                                                    </form>
                                                 </td>
-                                                {values.map((item, index) => (
-                                                    <td scope="row" key={index}>
-                                                        {item}
-                                                    </td>
-                                                ))}
+                                                <td>
+                                                    <form>
+                                                        <button
+                                                            className="btn btn-danger"
+                                                            onClick={() =>
+                                                                cancelWithdrawal(
+                                                                    item
+                                                                )
+                                                            }
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                {values?.slice(0, 7)?.map(
+                                                    (item, index) => (
+                                                        <td
+                                                            scope="row"
+                                                            key={index}
+                                                        >
+                                                            {item ?? "N/A"}
+                                                        </td>
+                                                    )
+                                                )}
                                             </tr>
                                         );
                                     })}

@@ -46,7 +46,7 @@ class MarketController extends Controller
             #return to register page if validation fails
         } else {
             $image='';
-            if($data->file('file')){
+            if($data->file){
                 $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($data->file('file')->getRealPath(), array("folder" => "eazyearn", "overwrite" => TRUE, "resource_type" => "image"));
                 $image = ['path' => $uploadedFileUrl->getSecurePath(), 'public_id' => $uploadedFileUrl->getPublicId()];
             }
@@ -64,23 +64,7 @@ class MarketController extends Controller
             $nextWeek = time() + (7 * 24 * 60 * 60);
             $date = date('Y-m-d', $nextWeek);
             Market::where('id', $request->id)->update(['approved' => true, 'active' => true, "expiry_date" => $date]);
-            $trans = new TransactionController();
-            $id = uuid_create();
-            $trans->createTransaction([
-                'transaction_id' => $id,
-                'user_id' => $eazyearn,
-                'amount' => 10000,
-                'status' => config('enums.transaction_status')['SUC'],
-                'transaction_type' => config('enums.transaction_types')['AD']
-            ]);
-            Account::where("user_id", $eazyearn)->increment('money_balance', 10000);
-            $trans->createTransaction([
-                'transaction_id' => $id,
-                'user_id' => Auth::id(),
-                'amount' => -10000,
-                'status' => config('enums.transaction_status')['SUC'],
-                'transaction_type' => config('enums.transaction_types')['AD']
-            ]);
+           
             return true;
         });
         return response()->json($success);
