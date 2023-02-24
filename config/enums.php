@@ -8,7 +8,8 @@ return [
         'IND'=>'Indirect Referal Bonus',
         'POI'=>'Eazy Earn Points',
         'PAY'=>'Eazy Earn PAYOUT',
-        'DAL'=>'Daily Bonus'
+        'DAL'=>'Daily Bonus',
+        'FAM'=>'Fame Contest'
 
     ],
     'transaction_status'=>[

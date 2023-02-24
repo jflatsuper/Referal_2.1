@@ -5,22 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Market extends Model
+class Fame extends Model
 {
     use HasFactory;
-   
-    protected $table = "marketplace";
+
+    protected $table = "fame_contest";
 
     protected $fillable = [
         'user_id',
-        'name',
-        "description",
+        'count',
         "link",
-        "transaction_id",
-        "active",
-        'approved',
-        'expiry_date', 
-        'image'   
+          
 
 
     ];
@@ -31,6 +26,7 @@ class Market extends Model
      * @var array<int, string>
      */
     protected $hidden = [
+
 
     ];
 

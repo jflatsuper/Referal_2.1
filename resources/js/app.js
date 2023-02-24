@@ -29,18 +29,17 @@ import "./components/Admin/NotificationScreen";
 import "./components/Admin/AdvertManagementScreen";
 import axios from "axios";
 import swal from "sweetalert";
-const item = axios.interceptors.response.use(
-    undefined,
-    function (error) {
-        if (error.response.status === 444) {
-            return swal({
-                title: error?.response?.data?.status,
-                text: error?.response?.data?.message,
-                icon: "error",
-            });
-        } else {
-            return;
-        }
+const item = axios.interceptors.response.use(undefined, function (error) {
+    if (error.response.status === 444) {
+        return swal({
+            title: error?.response?.data?.status,
+            text: error?.response?.data?.message,
+            icon: "error",
+        }).then((err) => {
+            return false;
+        });
+    } else {
+        return;
     }
-);
+});
 export default item;

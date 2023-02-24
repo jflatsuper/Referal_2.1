@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 const WithdrawalForm = ({}) => {
+    const [loading, setLoading] = useState(false);
     const formikProps = useFormik({
         initialValues: {
             delivery_email: "",
             amount: "",
         },
         onSubmit: (values) => {
-            axios.post("/createWithdrawal", {
-                ...values,
-            }).then(data=>{
-                swal({
-                    title: "Withdrawal Request Created",
-                    text: "Awaiting Approval from EAZYEARN",
-                    icon: "info",
-                }).then((success) => window.location.reload(true));
-            })
+            setLoading(true);
+            axios
+                .post("/createWithdrawal", {
+                    ...values,
+                })
+                .then((data) => {
+                    
+                   return data?swal({
+                        title: "Withdrawal Request Created",
+                        text: "Awaiting Approval from EAZYEARN",
+                        icon: "info",
+                    }):null
+                })
+                .finally(() => {
+                    setLoading(false);
+                    window.location.reload(true);
+                });
         },
         enableReinitialize: true,
     });
@@ -82,6 +91,7 @@ const WithdrawalForm = ({}) => {
                 <div>
                     <button
                         type="submit"
+                        disabled={loading}
                         className="btn btn-md btn-warning editbtn"
                         onClick={formikProps.handleSubmit}
                     >

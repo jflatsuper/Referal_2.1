@@ -431,9 +431,6 @@ function App() {
                                 {referal[0]?.refFirstName?.length &&
                                     [
                                         ...referal,
-                                        ...referal,
-                                        ...referal,
-                                        ...referal,
                                     ]?.map((item) => {
                                         return (
                                             <div

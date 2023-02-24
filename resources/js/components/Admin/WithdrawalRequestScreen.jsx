@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import DefaultTable from "../tables/Table";
 import dayjs from "dayjs";
 import swal from "sweetalert";
 const WithdrawalRequestScreen = () => {
@@ -12,7 +11,7 @@ const WithdrawalRequestScreen = () => {
             .then((data) => setWithdrawals(data.data));
     }, []);
     const approveWithdrawal = async (item) => {
-        axios
+      await  axios
             .post("/approveWithdrawal", {
                 trans_id: item.transaction_id,
                 user_id: item.user_id,
@@ -27,12 +26,13 @@ const WithdrawalRequestScreen = () => {
             });
     };
     const cancelWithdrawal = async (item) => {
-        axios
+        await axios
             .post("/declineWithdrawal", {
                 trans_id: item.transaction_id,
                 user_id: item.user_id,
             })
             .then((item) => {
+                console.log(item);
                 swal({
                     title: "Withdrawal Request Cancelled",
                     text: "Request Completed",
@@ -132,12 +132,14 @@ const WithdrawalRequestScreen = () => {
                                                 <td>
                                                     <form>
                                                         <button
+                                                            type="submit"
                                                             className="btn btn-primary"
-                                                            onClick={() =>
+                                                            onClick={() =>{
+                                                                e.preventDefault()
                                                                 approveWithdrawal(
                                                                     item
                                                                 )
-                                                            }
+                                                            }}
                                                         >
                                                             Approve
                                                         </button>
@@ -146,27 +148,29 @@ const WithdrawalRequestScreen = () => {
                                                 <td>
                                                     <form>
                                                         <button
+                                                            type="submit"
                                                             className="btn btn-danger"
-                                                            onClick={() =>
+                                                            onClick={(e) =>{
+                                                                e.preventDefault()
                                                                 cancelWithdrawal(
                                                                     item
-                                                                )
+                                                                )}
                                                             }
                                                         >
                                                             Cancel
                                                         </button>
                                                     </form>
                                                 </td>
-                                                {values?.slice(0, 7)?.map(
-                                                    (item, index) => (
+                                                {values
+                                                    ?.slice(0, 7)
+                                                    ?.map((item, index) => (
                                                         <td
                                                             scope="row"
                                                             key={index}
                                                         >
                                                             {item ?? "N/A"}
                                                         </td>
-                                                    )
-                                                )}
+                                                    ))}
                                             </tr>
                                         );
                                     })}
