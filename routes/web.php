@@ -36,7 +36,7 @@ Route::middleware(["auth"])->group(function () {
   Route::get('/getAllUserTransactions', [App\Http\Controllers\Transactions\TransactionController::class, 'getAllUserTransactions']);
   Route::get('/getCurrentUser', [App\Http\Controllers\Users\UserController::class, 'getCurrentUser']);
   Route::get('/getUserWithReferals', [App\Http\Controllers\Users\UserController::class, 'getUserWithReferals']);
-
+  Route::get('/getTotalEarnings', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'getTotalEarnings'])->name('getTotalEarnings');
   Route::get('/getMostRecent', [App\Http\Controllers\Notifications\NotificationController::class, 'getMostRecent']);
   Route::get('/getAllAdvertisements', [App\Http\Controllers\Market\MarketController::class, 'getAllAdvertisements']);
   Route::get(
@@ -60,6 +60,15 @@ Route::middleware(['auth', 'isUser'])->group(function () {
     }
 
   )->name('withdrawals');
+  Route::get(
+    '/raffle',
+    function () {
+      return view('users.raffle');
+    }
+
+  )->name('raffle');
+  Route::post('/joinRaffle', [App\Http\Controllers\Raffle\RaffleController::class, 'joinRaffle']);
+  Route::get('/getRaffleTickets', [App\Http\Controllers\Raffle\RaffleController::class, 'getRaffleTickets']);
   Route::get('/dailyBonus', [App\Http\Controllers\Market\MarketController::class, 'dailyBonus']);
   Route::get('/getWithdrawalDetails', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'getWithdrawalDetails'])->name('getWithdrawalDetails');
   Route::post('/createWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'createWithdrawal'])->name('createWithdrawal');
@@ -162,5 +171,5 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
   Route::post('/createVendorCodes', [App\Http\Controllers\Vendor\VendorController::class, 'createVerificationCodes']);
   Route::post('/approveWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'approveWithdrawal'])->name('approveWithdrawal');
   Route::post('/declineWithdrawal', [App\Http\Controllers\Withdrawal\WithdrawalController::class, 'declineWithdrawal'])->name('declineWithdrawal');
-
+  
 });

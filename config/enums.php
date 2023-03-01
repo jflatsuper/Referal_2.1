@@ -9,7 +9,8 @@ return [
         'POI'=>'Eazy Earn Points',
         'PAY'=>'Eazy Earn PAYOUT',
         'DAL'=>'Daily Bonus',
-        'FAM'=>'Fame Contest'
+        'FAM'=>'Fame Contest',
+        'RAF'=>'Raffle Draw'
 
     ],
     'transaction_status'=>[

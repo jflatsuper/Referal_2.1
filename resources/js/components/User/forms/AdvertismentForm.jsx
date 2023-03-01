@@ -120,7 +120,7 @@ const AdvertisementForm = () => {
                     <span className="text-danger">
                         {" "}
                         Please note, each advertisment will require a one time
-                        payment of N10,000 only.{" "}
+                        payment with an be negotiated with the Admin.{" "}
                     </span>
                     <div className="my-3">
                         <span className="text-dark">

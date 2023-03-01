@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Plus from "../icons/plus";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
@@ -9,6 +9,7 @@ import WithdrawalForm from "./forms/WithdrawalForm";
 const WithdrawalScreen = () => {
     const [withdrawals, setWithdrawals] = useState([]);
     const [pending, setPending] = useState([]);
+    const [userDetails, setUserDetails] = useState({});
     useLayoutEffect(() => {
         axios("/getWithdrawalDetails").then((data) => {
             const pendingVal = [];
@@ -16,12 +17,18 @@ const WithdrawalScreen = () => {
             data?.data?.map((item) => {
                 console.log(item);
                 return item?.complete
-                    ?  completed.push(item)
+                    ? completed.push(item)
                     : item?.amount && pendingVal.push(item);
             });
             console.log(pendingVal);
             setPending(pendingVal);
             setWithdrawals(completed);
+        });
+    }, []);
+    useEffect(() => {
+        axios("/getTotalEarnings").then((data) => {
+            console.log(data);
+            setUserDetails(data.data);
         });
     }, []);
     console.log(pending);
@@ -46,7 +53,6 @@ const WithdrawalScreen = () => {
     const handleFlutterPayment = useFlutterwave(config);
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "60px" }}>
-           
             {/* <h1>Hello Test</h1>
 
             <button
@@ -87,6 +93,26 @@ const WithdrawalScreen = () => {
                     <div>Withdrawal Request</div>
                 </button>
             </div>
+            {userDetails?.user && (
+                <div style={{ gap: "10px" }}>
+                    <div style={{ color: "orange" }}>
+                        <h4>
+                            {userDetails?.user?.first_name}{" "}
+                            {userDetails?.user?.surname}
+                        </h4>
+                    </div>
+                    <div className="rowItem" style={{ gap: "10px" }}>
+                        <h4>Total Earnings:</h4>{" "}
+                        <h4>
+                            {Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "NGN",
+                                minimumFractionDigits: 0,
+                            }).format(userDetails?.total??0)}
+                        </h4>
+                    </div>
+                </div>
+            )}
             <div
                 style={{
                     display: "flex",
@@ -102,7 +128,7 @@ const WithdrawalScreen = () => {
                 {pending.length ? (
                     <WithdrawalGroup data={pending} />
                 ) : (
-                    <EmptyMessage status={"pending"} />
+                    <EmptyMessage status={"pending  withdrawals"} />
                 )}
             </div>
             <div
@@ -120,7 +146,7 @@ const WithdrawalScreen = () => {
                 {withdrawals.length ? (
                     <WithdrawalGroup data={withdrawals} />
                 ) : (
-                    <EmptyMessage status={"completed"} />
+                    <EmptyMessage status={"completed  withdrawals"} />
                 )}
             </div>
             <div

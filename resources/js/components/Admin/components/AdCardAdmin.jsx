@@ -5,19 +5,29 @@ import largeIcon from "../../../../../public/icons/EAZYEARN LOGO 64PX BLUE.svg";
 import ChevDown from "../../icons/ChevDown";
 const AdCardAdmin = ({ data }) => {
     const approveAd = async (id) => {
-        const value = axios
+       await axios
             .post("/approveAdvertisement", { id: id })
-            .then((data) =>window.location.reload(true));
+            .then((data) => {
+                data
+                    ? swal({
+                          title: "Successfully Approved",
+                          text: "Advert successfully approved",
+                          icon: "success",
+                      }).then((item) => window.location.reload(true))
+                    : null;
+            })
+            .finally(() => {
+                setLoading(false);
+                window.location.reload(true);
+            });
     };
     return (
         <>
             {" "}
-
             <div className="row gx-5 gy-5">
                 {data?.map((item) => {
                     const image = JSON.parse(item?.image);
                     return (
-                        
                         <div className="col-md-4 col-lg-3 col-sm-12">
                             <div
                                 className="card marketCard  "
@@ -80,22 +90,22 @@ const AdCardAdmin = ({ data }) => {
                                                 Visit Link
                                             </button>
                                             <form>
-                                            <button
-                                                type="submit"
-                                                className="btn btn-secondary"
-                                                onClick={() =>
-                                                    approveAd(item.id)
-                                                }
-                                            >
-                                                Approve
-                                            </button>
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-secondary"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        approveAd(item.id);
+                                                    }}
+                                                >
+                                                    Approve
+                                                </button>
                                             </form>
                                         </div>
                                     )}
                                 </div>
                             </div>
                         </div>
-                       
                     );
                 })}
             </div>

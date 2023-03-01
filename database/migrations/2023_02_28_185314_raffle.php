@@ -8,12 +8,14 @@ return new class extends Migration {
     public function up()
     {
         //
-        Schema::create('fame_contest', function (Blueprint $table) {
+        $nextWeek = time() + (7 * 24 * 60 * 60);
+        $date = date('Y-m-d', $nextWeek);
+        Schema::create('raffle', function (Blueprint $table) use ($date) {
             $table->id();
-            $table->string('user_id')->unique();
-            $table->integer('count');
-            $table->string('link')->unique();
-            $table->boolean('active')->default(true);
+            $table->string('user_id');
+            $table->string('username');
+            $table->boolean('won')->default(false);
+            $table->dateTime('expiry_date')->default($date);
             $table->timestamps();
         });
     }
@@ -25,7 +27,7 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('fame_contest');
+        Schema::dropIfExists('raffle');
         //
     }
 };

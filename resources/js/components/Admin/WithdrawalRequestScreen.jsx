@@ -134,7 +134,7 @@ const WithdrawalRequestScreen = () => {
                                                         <button
                                                             type="submit"
                                                             className="btn btn-primary"
-                                                            onClick={() =>{
+                                                            onClick={(e) =>{
                                                                 e.preventDefault()
                                                                 approveWithdrawal(
                                                                     item

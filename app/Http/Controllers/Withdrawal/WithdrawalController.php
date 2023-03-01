@@ -29,6 +29,14 @@ class WithdrawalController extends Controller
         ]);
 
     }
+    public function getTotalEarnings()
+    {
+        $user = Auth::getUser();
+        $withdrawals = Withdrawal::where('user_id', Auth::id())->where(['complete' => true, 'approved' => true])->sum('amount');
+        $account = Account::where('user_id', $user->id)->first()->money_balance +$withdrawals;
+        return response()->json(['user'=>$user,'total'=>$account]);
+
+    }
     public function approveWithdrawal(Request $request)
     {
         $success = DB::transaction(function () use ($request) {

@@ -19,6 +19,7 @@ import "./components/User/AdvertisementScreen";
 import "./components/User/WithdrawalScreen";
 import "./components/User/AffiliateScreen";
 import "./components/User/ELearning";
+import "./components/User/RaffleScreen";
 
 import "./components/Admin/Home";
 import "./components/Admin/TransactionScreen";

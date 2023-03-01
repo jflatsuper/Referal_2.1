@@ -16,7 +16,7 @@ const EmptyMessage = ({ status }) => {
                             gap:'10px'
                         }}
                     >
-                        <h4>You have no {status} withdrawals</h4>{" "}
+                        <h4>You have no {status}</h4>{" "}
                         <h3><Archive /></h3>
                     </div>
                 </div>
