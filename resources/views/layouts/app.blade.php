@@ -131,11 +131,10 @@ Raffle</a>
           
           <div class="dropdown border-top  align-items-end">
               <a href="#" class="d-flex align-items-center justify-content-flex-start p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+                <img src="{{asset('eazy.png')}}" alt="mdo" width="24" height="24" class="rounded-circle">
               </a>
               <ul class="dropdown-menu  shadow text-dark" aria-labelledby="dropdownUser3">
-                <li><a class="dropdown-item text-small text-dark" href="#">Settings</a></li>
-                <li><a class="dropdown-item text-small text-dark" href="#">Profile</a></li>
+                
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item text-small text-dark" href="{{ route('logout') }}"
                                               onclick="event.preventDefault();

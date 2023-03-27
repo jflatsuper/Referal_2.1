@@ -77,9 +77,10 @@ const UserManagementScreen = () => {
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "space-between",
+                        overflow: "scroll",
                     }}
                 >
-                    <div style={{ maxHeight: "85%" }}>
+                    <div style={{ maxHeight: "85%", }}>
                         <h3>Users</h3>
                         <div
                             style={{

@@ -27,7 +27,7 @@ class MarketController extends Controller
     public function getAllAdvertisements()
     {
         $date = today()->format('Y-m-d');
-        $advertisements = Market::where('expiry_date', '>=', $date)->where('approved',true)->get()->sortByDesc('created_at')->values()->all();
+        $advertisements = Market::where('approved',true)->get()->sortByDesc('created_at')->values()->all();
         return response()->json($advertisements);
     }
     public function getAllAdvertisementsAd()

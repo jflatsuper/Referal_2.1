@@ -2,7 +2,7 @@
 
 
 @section('content')
-<section class="py-5 bg-dark" id="scroll-target">
+<section class="py-5 bg-dark" id="scroll-target" style="min-height:90vh">
                 <div class="container px-5 my-5">
 <h2 class="fw-bolder pb-3 mb-3 text-light">EazyEarn Vendors</h2>
 <div class="row gx-5">
@@ -37,7 +37,7 @@
 </div>
 
 </section>
-<section class="py-5 bg-light" id="scroll-target">
+<!-- <section class="py-5 bg-light" id="scroll-target">
                 <div class="container px-5 my-5">
                     <div class="row gx-5 align-items-center">
                         <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
 
 
 @endsection    
