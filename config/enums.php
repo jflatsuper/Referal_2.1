@@ -7,14 +7,23 @@ return [
         'REF'=>'Referal Bonus',
         'IND'=>'Indirect Referal Bonus',
         'POI'=>'Eazy Earn Points',
-        'PAY'=>'Eazy Earn PAYOUT'
+        'PAY'=>'Eazy Earn PAYOUT',
+        'DAL'=>'Daily Bonus',
+        'FAM'=>'Fame Contest',
+        'RAF'=>'Raffle Draw'
 
     ],
     'transaction_status'=>[
         'PEND'=>"pending",
         "SUC"=>"success",
         "FAIL"=>"failure"
+    ],
+    'currency'=>[
+        'N'=>'Naira',
+        'P'=>'Point'
+
     ]
 ]
+
 
 ?>

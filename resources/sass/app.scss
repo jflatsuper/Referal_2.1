@@ -1,22 +1,486 @@
 // Fonts
-@use 'sass:math';
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@use "sass:math";
+@import url("https://fonts.bunny.net/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
 
 @function pxToRem($pxValue) {
-   @return math.div($pxValue, 16) * 1rem;
+    @return math.div($pxValue, 16) * 1rem;
 }
-.mainContainer{
+.mainContainer {
     width: 100%;
-
-    
-
 }
-body{
-    background-color: #82acd6;
+body {
+    background-color: #003366;
+    color: white;
 }
+/* The sidepanel menu */
+.sidepanel {
+    height: 100%; /* Specify a height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2000;
+    background-color: #000034; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+}
+
+/* The sidepanel links */
+.sidepanel a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    // font-size: 25px;
+    color: white;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:hover {
+    color: orange;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+.welcomeName {
+    opacity: 1;
+    animation: 1s ease-out 0s 1 hideToShow;
+}
+@keyframes hideToShow {
+    0% {
+        opacity: 0;
+        width: 0%;
+        // transform: translateX(-100%);
+    }
+    100% {
+        opacity: 1;
+        width: 100%;
+        // transform: translateX(0);
+    }
+}
+
+/* Style the button that is used to open the sidepanel */
+.openbtn {
+    font-size: 25px;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    @media screen and (min-width: 781px) {
+        padding: 10px pxToRem(60);
+    }
+}
+
+.openbtn:hover {
+    color: orange;
+}
+.togglediv {
+    position: fixed;
+    z-index: 1000;
+    background-color: #003366;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.maxWidth {
+    width: 33.33%;
+}
+.largecardMobile {
+    height: 250px;
+
+    color: #000034;
+    background-color: white;
+    border: 1px solid lightgray;
+    transition: all 1s;
+
+    transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter,
+        filter;
+    transition-duration: 1s;
+    //    z-index: 1;
+    filter: drop-shadow(
+        0px 0.15px 0.45px rgba(0, 0, 0, 0.03),
+        0px 0.8px 1.8px rgba(0, 0, 0, 0.05)
+    );
+    border-radius: pxToRem(16);
+    &:hover {
+        border-radius: pxToRem(16);
+        filter: drop-shadow(0px 5px 16px rgba(0, 0, 0, 0.1));
+        background-color: #000034;
+        transition: all 1s;
+        background-color: #000034;
+        border: none;
+
+        color: white;
+
+        box-shadow: 0;
+        .quickLink {
+            background-color: orange;
+            color: #000034;
+            a {
+                color: #000034;
+            }
+        }
+    }
+    cursor: pointer;
+}
+.largecard {
+    height: 250px;
+
+    color: #000034;
+    background-color: burlywood;
+    border: 1px solid lightgray;
+    transition: all 1s;
+
+    transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter,
+        filter;
+    transition-duration: 1s;
+    //    z-index: 1;
+    filter: drop-shadow(
+        0px 0.15px 0.45px rgba(0, 0, 0, 0.03),
+        0px 0.8px 1.8px rgba(0, 0, 0, 0.05)
+    );
+    border-radius: pxToRem(16);
+    &:hover {
+        border-radius: pxToRem(16);
+        filter: drop-shadow(0px 5px 16px rgba(0, 0, 0, 0.1));
+        background-color: #000034;
+        transition: all 1s;
+        background-color: #000034;
+        border: none;
+
+        color: burlywood;
+
+        box-shadow: 0;
+        .quickLink {
+            background-color: burlywood;
+            color: #000034;
+            border: 1px solid burlywood;
+        }
+    }
+    cursor: pointer;
+}
+.homelargecard {
+    height: 548px;
+    background-color: #000034;
+}
+.settingsCard {
+    color: #000034;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    filter: drop-shadow(0px 5px 16px rgba(0, 0, 0, 0.1));
+}
+.contactGap {
+    display: flex;
+    flex-direction: row;
+    gap: 30%;
+    align-items: center;
+}
+.mainSetting {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+.editbtn {
+    width: max-content;
+    float: right;
+}
+.rowItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.marketCard {
+    height: 250px;
+    background-color: grey;
+}
+.contentArea {
+    padding: pxToRem(20);
+    padding-top: pxToRem(60);
+    @media screen and (min-width: 781px) {
+        padding: pxToRem(60);
+        padding-top: pxToRem(70);
+    }
+}
+.homepage {
+    width: 100%;
+    @media screen and (min-width: 781px) {
+        width: 50%;
+        background-color: pink;
+    }
+}
+.singleLine {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    line-clamp: 1;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    -webkit-box-orient: vertical;
+}
+.singleLineNotif {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:max-content !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    line-clamp: 1;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    -webkit-box-orient: vertical;
+}
+.twoLineText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: pxToRem(20);
+    height: pxToRem(40);
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.h1 {
+    font-weight: bold;
+    font-size: pxToRem(92);
+    line-height: 100%;
+
+    @media only screen and (max-width: 768px) {
+        font-size: pxToRem(44);
+    }
+}
+
+.h2 {
+    font-weight: bold;
+    font-size: pxToRem(40);
+    line-height: 100%;
+    @media only screen and (max-width: 768px) {
+        font-size: pxToRem(36);
+    }
+}
+
+.h3 {
+    font-weight: bold;
+    font-size: pxToRem(32);
+    line-height: 125%;
+    @media only screen and (max-width: 768px) {
+        font-size: pxToRem(28);
+    }
+}
+
+.h4 {
+    font-weight: bold;
+    font-size: pxToRem(24);
+    line-height: 125%;
+}
+
+.h5 {
+    font-weight: bold;
+    font-size: pxToRem(20);
+    line-height: 125%;
+}
+
+.s1 {
+    font-weight: bold;
+    font-size: pxToRem(16);
+    line-height: 140%;
+}
+
+.s2 {
+    font-weight: bold;
+    font-size: pxToRem(14);
+    line-height: 140%;
+}
+
+.body1 {
+    font-size: pxToRem(16);
+    line-height: 150%;
+}
+
+.body2 {
+    font-size: pxToRem(14);
+    line-height: 150%;
+}
+
+.caption1 {
+    font-size: pxToRem(12);
+    line-height: 120%;
+}
+
+.caption2 {
+    font-weight: bold;
+    font-size: pxToRem(12);
+    line-height: 120%;
+}
+
+.caption3 {
+    font-size: pxToRem(10);
+    line-height: 120%;
+}
+.capitalize {
+    text-transform: capitalize;
+}
+.homeScreen {
+    width: 50%;
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+    }
+}
+.mainCont {
+    display: flex;
+    flex-direction: row;
+    @media only screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+.quickLink {
+    width: pxToRem(50);
+    height: pxToRem(50);
+    border-radius: pxToRem(8);
+    background-color: #000034;
+    color: orange;
+    border-radius: pxToRem(8);
+    filter: drop-shadow(0px 5px 16px rgba(0, 0, 0, 0.1)) !important;
+    transition: all 1s;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000034;
+
+    box-shadow: 0;
+}
+.quickLink a {
+    color: orange;
+}
+.eazyCol {
+    border: 1px solid #000034;
+    border-radius: pxToRem(12);
+    height: pxToRem(80);
+    background-color: white;
+    color: #000034;
+}
+.advertCard {
+    @media screen and (min-width: 1200px) {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: pxToRem(12);
+        padding: pxToRem(4);
+        transition: 1s all ease-in-out;
+        overflow: hidden;
+        .description {
+            height: 0;
+        }
+        &:hover {
+            background: rgba(255, 255, 255, 1);
+            margin-bottom: pxToRem(10);
+            .description {
+                height: 100%;
+                margin: pxToRem(10);
+                margin-bottom: 0;
+                overflow: hidden;
+                transition: 0.5s height ease-in-out;
+            }
+        }
+    }
+}
+.advertCard {
+    @media only screen and (max-width: 1119px) {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: pxToRem(12);
+        padding: pxToRem(4);
+        transition: 1s all ease-in-out;
+        overflow: hidden;
+        .description {
+            height: 0;
+        }
+        .chev {
+        }
+        &:hover {
+            background: rgba(255, 255, 255, 0.8);
+            margin-bottom: pxToRem(10);
+            .chev {
+                display: none;
+            }
+            .description {
+                height: 100%;
+                margin: pxToRem(10);
+                margin-bottom: 0;
+                overflow: hidden;
+                transition: 0.5s height ease-in-out;
+            }
+        }
+    }
+}
+.fourLineText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: pxToRem(20);
+    height: pxToRem(80);
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+.divStyle {
+    max-width: 100% !important;
+    height: pxToRem(48);
+    width: 100%;
+    border: 1px dashed #000034;
+    border-radius: 8px;
+    font-size: small;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: blue;
+    cursor: pointer;
+}
+.notif {
+    animation: my-animation 20s 5 ease-in;
+}
+@-moz-keyframes my-animation {
+    from { -moz-transform: translateX(-100%); }
+    to { -moz-transform: translateX(-100%); }
+  }
+  
+  /* for Chrome */
+  @-webkit-keyframes my-animation {
+    from { -webkit-transform: translateX(100%); }
+    to { -webkit-transform: translateX(-100%); }
+  }
+  
+  @keyframes my-animation {
+    from {
+      -moz-transform: translateX(100%);
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
+    to {
+      -moz-transform: translateX(-100%);
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+  }

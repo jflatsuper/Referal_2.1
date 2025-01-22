@@ -67,8 +67,8 @@ class RegisterController extends Controller
                 'string',
                 'exists:verification,verif_code',
             ],
-            'ref_code' => ['string'],
-            'link' => ['string']
+            'ref_code' => ['string', 'nullable'],
+            'link' => ['string', 'nullable']
         ]);
     }
     public function register(Request $data)
@@ -76,6 +76,11 @@ class RegisterController extends Controller
         $TOTAL = 2900; //total amount coming into system from registration
         $value = $data['vend_code'];
         $validatedData = $this->validator($data->all());
+        if (str_contains($data->username, '-') || str_contains($data->username, ' ')) {
+            return redirect()->back()->withErrors([
+                'username' => 'User name must not have spaces in between or - character'
+            ]);
+        }
 
         if ($validatedData->fails()) {
             return redirect()->back()->withErrors($validatedData);
@@ -92,7 +97,14 @@ class RegisterController extends Controller
             } else {
                 //if new,find the user referring the individual--defaults to eazyearn
                 $eazyearn = User::where('username', 'eazyearn')->first()->id;
-                $referee = User::where('username', explode('-', $data->ref_code ?? 'eazyearn')[0])->first()->id;
+                $ref = User::where('username', explode('-', $data->ref_code ?? 'eazyearn')[0])->first();
+                if (!$ref) {
+                    return redirect()->back()->withErrors([
+                        'ref_code' => 'Invalid Referral Code'
+                    ]);
+                }
+
+                $referee = $ref->id;
                 DB::transaction(function () use ($data, $value, $referee, $TOTAL, $eazyearn) {
                     //1.Create new user 
                     $this->create($data->all());
@@ -107,14 +119,16 @@ class RegisterController extends Controller
                         'user_id' => $new_user,
                         'amount' => 2000,
                         'status' => config('enums.transaction_status')['SUC'],
-                        'type' => config('enums.transaction_types')['POI']
+                        'type' => config('enums.transaction_types')['POI'],
+                        'currency' => config('enums.currency')['P']
                     ]);
                     //3. Deposit total amount into eazyearn
                     $this->createTransaction([
                         'user_id' => $eazyearn,
                         'amount' => $TOTAL,
                         'status' => config('enums.transaction_status')['SUC'],
-                        'type' => config('enums.transaction_types')['DEP']
+                        'type' => config('enums.transaction_types')['DEP'],
+                        'currency' => config('enums.currency')['N']
                     ]);
                     Account::where("user_id", $eazyearn)->increment('money_balance', $TOTAL);
 
@@ -126,14 +140,16 @@ class RegisterController extends Controller
                             'user_id' => $referee,
                             'amount' => 2200,
                             'status' => config('enums.transaction_status')['SUC'],
-                            'type' => config('enums.transaction_types')['REF']
+                            'type' => config('enums.transaction_types')['REF'],
+                            'currency' => config('enums.currency')['N']
                         ]);
                         $this->createTransaction([
                             'trans_id' => $trans_id,
                             'user_id' => $eazyearn,
                             'amount' => -2200,
                             'status' => config('enums.transaction_status')['SUC'],
-                            'type' => config('enums.transaction_types')['PAY']
+                            'type' => config('enums.transaction_types')['PAY'],
+                            'currency' => config('enums.currency')['N']
                         ]);
                         //4.1 deposits into user acc
                         Account::where("user_id", $referee)->increment('money_balance', 2200);
@@ -201,7 +217,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'username' => $data['username'],
-            'ref_link' => $data['username'] . '-' . random_int(3000, 5000) * random_int(1, 1.9)
+            'ref_link' => $data['username'] . '-' . random_int(3000, 5000) * random_int(1, 1.9),
+            'link' => $data['link'] ?? null
 
         ]);
     }
@@ -229,7 +246,8 @@ class RegisterController extends Controller
             'user_id' => $data["user_id"],
             'amount' => $data['amount'],
             'status' => $data["status"],
-            'transaction_type' => $data['type']
+            'transaction_type' => $data['type'],
+            'currency' => $data['currency'] ?? config('enums.currency')['N']
         ]);
     }
 }

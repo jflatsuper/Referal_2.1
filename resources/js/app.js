@@ -13,8 +13,34 @@ import "./bootstrap";
  */
 
 import "./components/App";
+import "./components/User/TransactionScreen";
+import "./components/User/SettingsScreen";
+import "./components/User/AdvertisementScreen";
+import "./components/User/WithdrawalScreen";
+import "./components/User/AffiliateScreen";
+import "./components/User/ELearning";
+import "./components/User/RaffleScreen";
+
 import "./components/Admin/Home";
 import "./components/Admin/TransactionScreen";
 import "./components/Admin/VendCodeScreen";
-import "./components/User/TransactionScreen";
-import "./components/User/SettingsScreen";
+import "./components/Admin/WithdrawalRequestScreen";
+import "./components/Admin/UsersControlScreen";
+import "./components/Admin/NotificationScreen";
+import "./components/Admin/AdvertManagementScreen";
+import axios from "axios";
+import swal from "sweetalert";
+const item = axios.interceptors.response.use(undefined, function (error) {
+    if (error.response.status === 444) {
+        return swal({
+            title: error?.response?.data?.status,
+            text: error?.response?.data?.message,
+            icon: "error",
+        }).then((err) => {
+            return false;
+        });
+    } else {
+        return;
+    }
+});
+export default item;
